@@ -16,6 +16,7 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
         <ThemeProvider enableSystem>
           <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
         </ThemeProvider>
+        <div id="zpass-app-connector">{/* This element will be used by the app connector */}</div>
       </body>
     </html>
   );
