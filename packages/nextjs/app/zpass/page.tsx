@@ -1,5 +1,6 @@
 "use client";
 
+import { FrogSpec } from "@frogcrypto/shared";
 import { Zapp, connect } from "@parcnet-js/app-connector";
 import { useAccount } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
@@ -38,21 +39,7 @@ const ZuAuth = () => {
         pods: {
           FROGCRYPTO: {
             pod: {
-              entries: {
-                name: { type: "string" },
-                description: { type: "string" },
-                imageUrl: { type: "string" },
-                frogId: { type: "int" },
-                biome: { type: "int" },
-                rarity: { type: "int" },
-                temperament: { type: "int" },
-                jump: { type: "int" },
-                speed: { type: "int" },
-                intelligence: { type: "int" },
-                beauty: { type: "int" },
-                timestampSigned: { type: "int" },
-                owner: { type: "string" },
-              },
+              entries: FrogSpec.schema,
             },
             revealed: {
               name: true,
