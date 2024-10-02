@@ -1,9 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { FrogSpec } from "@frogcrypto/shared";
-import { Zapp, connect } from "@parcnet-js/app-connector";
+import { ParcnetAPI, Zapp, connect } from "@parcnet-js/app-connector";
+import { POD } from "@pcd/pod";
 import { useAccount } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
+
+// Paste in the array which you get from localstorage
+const myForgs = ["entries:{...}"];
 
 const myZapp: Zapp = {
   name: "Frog Bank",
@@ -11,6 +16,7 @@ const myZapp: Zapp = {
 
 const ZuAuth = () => {
   const { address: connectedAddress } = useAccount();
+  const [z, setZ] = useState<ParcnetAPI | null>(null);
 
   const handleAuth = async () => {
     try {
@@ -26,15 +32,30 @@ const ZuAuth = () => {
 
       console.log("The element was found", element);
       // The URL to Zupass
-      const clientUrl = "https://zupass.org";
+      const clientUrl = "https://staging.zupass.org";
 
       // Connect!
-      const z = await connect(myZapp, element, clientUrl);
+      const zCon = await connect(myZapp, element, clientUrl);
+      setZ(zCon);
 
-      console.log("The z is ", z);
+      console.log("The z is ", zCon);
 
       notification.success("Please check console for more logs");
 
+      const res = POD.deserialize(myForgs[0]);
+
+      // insert the POD
+      await zCon.pod.insert(res);
+
+      console.log("The result is", res);
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
+  const handleProve = async () => {
+    try {
+      if (!z) return notification.error("Please authenticate first");
       const result = await z.gpc.prove({
         pods: {
           FROGCRYPTO: {
@@ -54,17 +75,21 @@ const ZuAuth = () => {
         },
       });
 
-      console.log("The result is", result);
+      console.log("The result after the insert", result);
     } catch (e) {
       console.log("error", e);
+      notification.error("Oops! Something went wrong");
     }
   };
 
   return (
     <main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
-      <div className="z-10 max-w-5xl w-full text-sm">
+      <div className="z-10 max-w-5xl w-full text-sm flex space-x-2">
         <button onClick={handleAuth} className="btn btn-primary">
           Auth
+        </button>
+        <button onClick={handleProve} className="btn btn-primary">
+          Prove
         </button>
       </div>
     </main>
