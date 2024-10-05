@@ -4,11 +4,38 @@ import { useState } from "react";
 import { FrogSpec } from "@frogcrypto/shared";
 import { ParcnetAPI, Zapp, connect } from "@parcnet-js/app-connector";
 import { POD } from "@pcd/pod";
+import { PartialDeep } from "type-fest";
 import { useAccount } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
 
 // Paste in the array which you get from localstorage
-const myForgs = ["entries:{...}"];
+const myForgs = ["entries: {...}"];
+
+type ForgCryptToType = PartialDeep<typeof FrogSpec.schema>;
+
+const entriesToProve: ForgCryptToType = {
+  beauty: {
+    type: "int",
+  },
+  jump: {
+    type: "int",
+  },
+  speed: {
+    type: "int",
+  },
+  frogId: {
+    type: "int",
+  },
+  name: {
+    type: "string",
+  },
+  owner: {
+    type: "cryptographic",
+  },
+  intelligence: {
+    type: "int",
+  },
+};
 
 const myZapp: Zapp = {
   name: "Frog Bank",
@@ -60,13 +87,13 @@ const ZuAuth = () => {
         pods: {
           FROGCRYPTO: {
             pod: {
-              entries: FrogSpec.schema,
+              entries: entriesToProve,
             },
             revealed: {
               name: true,
+              owner: true,
               beauty: true,
               rarity: true,
-              temperament: true,
               jump: true,
               speed: true,
               intelligence: true,
