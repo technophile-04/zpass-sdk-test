@@ -2013,40 +2013,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcnet-js/app-connector@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "@parcnet-js/app-connector@npm:0.0.7"
+"@parcnet-js/app-connector@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@parcnet-js/app-connector@npm:1.0.0"
   dependencies:
     "@brenoroosevelt/toast": ^2.0.3
-    "@parcnet-js/client-rpc": 0.0.4
-    "@parcnet-js/podspec": 0.0.3
+    "@parcnet-js/client-rpc": 1.0.0
+    "@parcnet-js/podspec": 1.0.0
     "@pcd/gpc": ^0.0.8
     "@pcd/pod": ^0.1.7
     nanoevents: ^9.0.0
     valibot: ^0.42.0
-  checksum: 80c27e43197029ebc593f1cf665f7eabe92131a0629414cf2de8e31c8e56d7dd1b44a7d7b8b0a247f2e7b7eabdff521c306c67906d0c75be750d75f2fa4a2e7a
+  checksum: d78726c972a9ab6faf1db70e9b2dedb734a66d898ad9224e9983f5111462fc3cb9c1c011d198c31bbbbf35a88be5ab5b663cfccffb2fae5dfe91d733ccd87347
   languageName: node
   linkType: hard
 
-"@parcnet-js/client-rpc@npm:0.0.4":
-  version: 0.0.4
-  resolution: "@parcnet-js/client-rpc@npm:0.0.4"
+"@parcnet-js/client-rpc@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@parcnet-js/client-rpc@npm:1.0.0"
   dependencies:
-    "@parcnet-js/podspec": 0.0.3
+    "@parcnet-js/podspec": 1.0.0
     "@pcd/gpc": ^0.0.8
     "@pcd/pod": ^0.1.7
     valibot: ^0.42.0
-  checksum: a39be173fbf81fc3bb23f653fffe3571b5f8c16a2a72f7ad63ffa81eb4217fe792e5f1b4dc3c7812c85d5a7b39dd4f0ef12d65f91276e6e81ba55990114be8d7
+  checksum: c9781bfd42563002ea7b07dfc62441ed12097c28eef2d635b40cb03264c20052e17c3c0bb318068abba0606888a61050b36d8fa9a2554449a96b578226dff55e
   languageName: node
   linkType: hard
 
-"@parcnet-js/podspec@npm:0.0.3":
-  version: 0.0.3
-  resolution: "@parcnet-js/podspec@npm:0.0.3"
+"@parcnet-js/podspec@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@parcnet-js/podspec@npm:1.0.0"
   dependencies:
     "@pcd/gpc": 0.0.8
     "@pcd/pod": 0.1.7
-  checksum: df30916fa7a37838663c13d649276ab1dd3f923c61b2fb297d1072c3d122354f73e4d95e5c877551ba6e4829db2f4f5713b2a3598dfb20f3ff836dfe4723227e
+  checksum: e30138863384cd07f2f6d099cf0fc68d258569f566c1624d3d188ad91d86fe024278d0bbd68060d93465984103298cb06cfd3dce90eb8b439e8640d52a127ef2
   languageName: node
   linkType: hard
 
@@ -2378,7 +2378,7 @@ __metadata:
   dependencies:
     "@frogcrypto/shared": ^0.0.0
     "@heroicons/react": ~2.0.11
-    "@parcnet-js/app-connector": ^0.0.7
+    "@parcnet-js/app-connector": ^1.0.0
     "@pcd/pod": ^0.1.7
     "@rainbow-me/rainbowkit": 2.1.5
     "@tanstack/react-query": ~5.28.6
