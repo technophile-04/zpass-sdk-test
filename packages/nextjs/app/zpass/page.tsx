@@ -3,10 +3,26 @@
 import { useState } from "react";
 import { FrogSpec } from "@frogcrypto/shared";
 import { ParcnetAPI, Zapp, connect } from "@parcnet-js/app-connector";
-import { POD } from "@pcd/pod";
+import { POD, PODEntries } from "@pcd/pod";
 import { PartialDeep } from "type-fest";
 import { useAccount } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
+
+export interface PODData {
+  entries: PODEntries;
+  signature: string;
+  signerPublicKey: string;
+}
+
+export function podToPODData(pod: POD): PODData {
+  return {
+    entries: pod.content.asEntries(),
+    signature: pod.signature,
+    signerPublicKey: pod.signerPublicKey,
+  };
+}
+
+// TODO: Dynamically load the auth button
 
 // Paste in the array which you get from localstorage
 const myForgs = ["entries: {...}"];
@@ -29,6 +45,9 @@ const entriesToProve: ForgCryptToType = {
   name: {
     type: "string",
   },
+  biome: {
+    type: "int",
+  },
   owner: {
     type: "cryptographic",
   },
@@ -39,6 +58,11 @@ const entriesToProve: ForgCryptToType = {
 
 const myZapp: Zapp = {
   name: "Frog Bank",
+  permissions: {
+    READ_POD: { collections: ["FROGCRYPTO"] },
+    INSERT_POD: { collections: ["FROGCRYPTO"] },
+    REQUEST_PROOF: { collections: ["FROGCRYPTO"] },
+  },
 };
 
 const ZuAuth = () => {
@@ -59,20 +83,20 @@ const ZuAuth = () => {
 
       console.log("The element was found", element);
       // The URL to Zupass
-      const clientUrl = "https://staging.zupass.org";
+      const clientUrl = "https://zupass.org";
 
       // Connect!
       const zCon = await connect(myZapp, element, clientUrl);
       setZ(zCon);
 
-      console.log("The z is ", zCon);
-
-      notification.success("Please check console for more logs");
-
       const res = POD.deserialize(myForgs[0]);
+      console.log("the resulit is", res);
+      const podData = podToPODData(res);
 
       // insert the POD
-      await zCon.pod.insert(res);
+      await zCon.pod.collection("FROGCRYPTO").insert(podData);
+
+      notification.success("Please check console for more logs");
 
       console.log("The result is", res);
     } catch (e) {
@@ -84,19 +108,22 @@ const ZuAuth = () => {
     try {
       if (!z) return notification.error("Please authenticate first");
       const result = await z.gpc.prove({
-        pods: {
-          FROGCRYPTO: {
-            pod: {
-              entries: entriesToProve,
-            },
-            revealed: {
-              name: true,
-              owner: true,
-              beauty: true,
-              rarity: true,
-              jump: true,
-              speed: true,
-              intelligence: true,
+        request: {
+          pods: {
+            FROGCRYPTO: {
+              pod: {
+                entries: entriesToProve,
+              },
+              revealed: {
+                beauty: true,
+                jump: true,
+                speed: true,
+                forgId: true,
+                name: true,
+                biome: true,
+                owner: true,
+                intelligence: true,
+              },
             },
           },
         },
