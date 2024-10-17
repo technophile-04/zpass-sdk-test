@@ -177,6 +177,7 @@ const ZuAuth = () => {
 
       if (result.success) {
         const { boundConfig, revealedClaims } = result;
+        console.log("The bound config", boundConfig);
         const circuitReq = checkVerifyArgs(boundConfig, revealedClaims);
         const circuitDesc = checkCircuitRequirements(circuitReq, boundConfig.circuitIdentifier);
 
