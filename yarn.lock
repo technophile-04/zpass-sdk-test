@@ -2087,7 +2087,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pcd/gpc@npm:0.0.8, @pcd/gpc@npm:^0.0.8":
+"@pcd/gpc@npm:0.0.8":
   version: 0.0.8
   resolution: "@pcd/gpc@npm:0.0.8"
   dependencies:
@@ -2101,6 +2101,23 @@ __metadata:
     snarkjs: ^0.7.4
     url-join: ^4.0.1
   checksum: b205ad7306c9c0ef0c483d5b713d6fbf78f4d3ffd490effbf8d775aac6ab50bb8e704bf233dbee9a71380cc28d7a09316a808f23509d387b225264538d607a12
+  languageName: node
+  linkType: hard
+
+"@pcd/gpc@patch:@pcd/gpc@npm%3A0.0.8#./.yarn/patches/@pcd-gpc-npm-0.0.8-dd72f4c475.patch::locator=se-2%40workspace%3A.":
+  version: 0.0.8
+  resolution: "@pcd/gpc@patch:@pcd/gpc@npm%3A0.0.8#./.yarn/patches/@pcd-gpc-npm-0.0.8-dd72f4c475.patch::version=0.0.8&hash=422e86&locator=se-2%40workspace%3A."
+  dependencies:
+    "@pcd/gpcircuits": 0.1.7
+    "@pcd/pod": 0.1.7
+    "@pcd/util": 0.5.4
+    "@semaphore-protocol/core": ^4.0.3
+    "@semaphore-protocol/identity": ^3.15.2
+    "@types/lodash": ^4.17.1
+    json-bigint: ^1.0.0
+    snarkjs: ^0.7.4
+    url-join: ^4.0.1
+  checksum: 403d81c856f428f5aef5f65029bb31d78be8ad384916355e9319fa7846aec77d36387ae7209d0262db8790658560d3ad1cd5850ed1dfb2d1e975ee7e5e2f882c
   languageName: node
   linkType: hard
 
@@ -13089,6 +13106,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "se-2@workspace:."
   dependencies:
+    "@pcd/gpc": ^0.0.8
     husky: ~8.0.3
     lint-staged: ~13.2.2
   languageName: unknown

@@ -41,5 +41,12 @@
   "packageManager": "yarn@3.2.3",
   "engines": {
     "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "@pcd/gpc": "^0.0.8"
+  },
+  "resolutions": {
+    "@pcd/gpc@^0.0.8": "patch:@pcd/gpc@npm%3A0.0.8#./.yarn/patches/@pcd-gpc-npm-0.0.8-dd72f4c475.patch",
+    "@pcd/gpc@0.0.8": "patch:@pcd/gpc@npm%3A0.0.8#./.yarn/patches/@pcd-gpc-npm-0.0.8-dd72f4c475.patch"
   }
 }
