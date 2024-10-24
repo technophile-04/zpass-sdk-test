@@ -3,10 +3,51 @@
 import { useState } from "react";
 import { FrogSpec } from "@frogcrypto/shared";
 import { ParcnetAPI, Zapp, connect } from "@parcnet-js/app-connector";
+import { gpcPreVerify } from "@pcd/gpc";
 import { POD, PODEntries } from "@pcd/pod";
+import { BABY_JUB_PRIME } from "@pcd/util";
 import { PartialDeep } from "type-fest";
 import { useAccount } from "wagmi";
 import { notification } from "~~/utils/scaffold-eth";
+
+export function zeroResidueMod(x: any, n: bigint): bigint {
+  const xAsBigint: bigint = typeof x === "string" ? BigInt(x) : x;
+
+  return (n + (xAsBigint % n)) % n;
+}
+
+export function makePublicSignals(inputs: any, outputs: any): bigint[] {
+  return [
+    ...outputs.entryRevealedValueHash,
+    ...outputs.virtualEntryRevealedValueHash,
+    ...outputs.ownerV3RevealedNullifierHash,
+    ...outputs.ownerV4RevealedNullifierHash,
+    ...inputs.entryObjectIndex,
+    ...inputs.entryNameHash,
+    inputs.entryIsValueHashRevealed,
+    inputs.virtualEntryIsValueHashRevealed,
+    ...inputs.entryEqualToOtherEntryByIndex,
+    inputs.entryIsEqualToOtherEntry,
+    inputs.ownerExternalNullifier,
+    ...inputs.ownerV3EntryIndex,
+    ...inputs.ownerV3IsNullifierHashRevealed,
+    ...inputs.ownerV4EntryIndex,
+    ...inputs.ownerV4IsNullifierHashRevealed,
+    ...inputs.numericValueEntryIndices,
+    inputs.numericValueInRange,
+    ...inputs.numericMinValues.map((value: any) => zeroResidueMod(value, BABY_JUB_PRIME)),
+    ...inputs.numericMaxValues.map((value: any) => zeroResidueMod(value, BABY_JUB_PRIME)),
+    ...inputs.entryInequalityValueIndex,
+    ...inputs.entryInequalityOtherValueIndex,
+    inputs.entryInequalityIsLessThan,
+    ...inputs.tupleIndices.flat(),
+    ...inputs.listComparisonValueIndex,
+    inputs.listContainsComparisonValue,
+    ...inputs.listValidValues.flat(),
+    inputs.requireUniqueContentIDs,
+    inputs.globalWatermark,
+  ].map(BigInt);
+}
 
 export interface PODData {
   entries: PODEntries;
@@ -23,9 +64,6 @@ export function podToPODData(pod: POD): PODData {
 }
 
 // TODO: Dynamically load the auth button
-
-// Paste in the array which you get from localstorage
-const myForgs = ["entries: {...}"];
 
 type ForgCryptToType = PartialDeep<typeof FrogSpec.schema>;
 
@@ -52,6 +90,9 @@ const entriesToProve: ForgCryptToType = {
     type: "cryptographic",
   },
   intelligence: {
+    type: "int",
+  },
+  rarity: {
     type: "int",
   },
 };
@@ -89,16 +130,7 @@ const ZuAuth = () => {
       const zCon = await connect(myZapp, element, clientUrl);
       setZ(zCon);
 
-      const res = POD.deserialize(myForgs[0]);
-      console.log("the resulit is", res);
-      const podData = podToPODData(res);
-
-      // insert the POD
-      await zCon.pod.collection("FROGCRYPTO").insert(podData);
-
       notification.success("Please check console for more logs");
-
-      console.log("The result is", res);
     } catch (e) {
       console.log("error", e);
     }
@@ -123,11 +155,21 @@ const ZuAuth = () => {
                 biome: true,
                 owner: true,
                 intelligence: true,
+                rarity: true,
               },
             },
           },
         },
       });
+
+      if (result.success) {
+        const boundConfig = result.boundConfig;
+        const revealedClaims = result.revealedClaims;
+
+        const circuit = gpcPreVerify(boundConfig, revealedClaims);
+        const pubSignals = makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
+        console.log("The public signals", pubSignals);
+      }
 
       console.log("The result after the insert", result);
     } catch (e) {

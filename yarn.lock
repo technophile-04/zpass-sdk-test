@@ -192,13 +192,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brenoroosevelt/toast@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "@brenoroosevelt/toast@npm:2.0.3"
-  checksum: 6744fd1176fbdd09a6989e5f8d97547238d7db1e24482bc4dc866a90a8cc9c95d79573784429d4072e1a2bb2937bfac58f48486b89a4f24948d20401a4a94680
-  languageName: node
-  linkType: hard
-
 "@chainsafe/as-sha256@npm:^0.3.1":
   version: 0.3.1
   resolution: "@chainsafe/as-sha256@npm:0.3.1"
@@ -2013,40 +2006,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcnet-js/app-connector@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@parcnet-js/app-connector@npm:1.0.0"
+"@parcnet-js/app-connector@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "@parcnet-js/app-connector@npm:1.1.5"
   dependencies:
-    "@brenoroosevelt/toast": ^2.0.3
-    "@parcnet-js/client-rpc": 1.0.0
-    "@parcnet-js/podspec": 1.0.0
-    "@pcd/gpc": ^0.0.8
-    "@pcd/pod": ^0.1.7
+    "@parcnet-js/client-rpc": 1.1.4
+    "@parcnet-js/podspec": 1.1.2
+    "@pcd/gpc": ^0.3.0
+    "@pcd/pod": ^0.4.0
     nanoevents: ^9.0.0
     valibot: ^0.42.0
-  checksum: d78726c972a9ab6faf1db70e9b2dedb734a66d898ad9224e9983f5111462fc3cb9c1c011d198c31bbbbf35a88be5ab5b663cfccffb2fae5dfe91d733ccd87347
+  checksum: 9e1075d25884d11ff5f182a5c97d2c4619cce57bac4ce119ea53254c916043a796f42791f5c68bad0bff2d215e1f1b71698170687697e592f2662e99b1f1f267
   languageName: node
   linkType: hard
 
-"@parcnet-js/client-rpc@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@parcnet-js/client-rpc@npm:1.0.0"
+"@parcnet-js/client-rpc@npm:1.1.4":
+  version: 1.1.4
+  resolution: "@parcnet-js/client-rpc@npm:1.1.4"
   dependencies:
-    "@parcnet-js/podspec": 1.0.0
-    "@pcd/gpc": ^0.0.8
-    "@pcd/pod": ^0.1.7
+    "@parcnet-js/podspec": 1.1.2
+    "@pcd/gpc": ^0.3.0
+    "@pcd/pod": ^0.4.0
     valibot: ^0.42.0
-  checksum: c9781bfd42563002ea7b07dfc62441ed12097c28eef2d635b40cb03264c20052e17c3c0bb318068abba0606888a61050b36d8fa9a2554449a96b578226dff55e
+  checksum: 898e5d1cde3b0ed3d4bd57ff012a096fdb0c617df0143d23bfac90469b28c90776bf5cd3424261d2d9111e5e897b2376efe1d40f9754b6899d1a2eb77bf7a7ee
   languageName: node
   linkType: hard
 
-"@parcnet-js/podspec@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@parcnet-js/podspec@npm:1.0.0"
+"@parcnet-js/podspec@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@parcnet-js/podspec@npm:1.1.2"
   dependencies:
-    "@pcd/gpc": 0.0.8
-    "@pcd/pod": 0.1.7
-  checksum: e30138863384cd07f2f6d099cf0fc68d258569f566c1624d3d188ad91d86fe024278d0bbd68060d93465984103298cb06cfd3dce90eb8b439e8640d52a127ef2
+    "@pcd/gpc": ^0.3.0
+    "@pcd/pod": ^0.4.0
+  checksum: e23f694353834119d264dee1aa52278e46dbeaf1dc5081578ddb53c1268a7c3c34c376f4b9ceb0d5220c68ce08885e90724bd983a9328d6ebd0b89c99c6f0a23
   languageName: node
   linkType: hard
 
@@ -2087,7 +2079,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pcd/gpc@npm:0.0.8, @pcd/gpc@npm:^0.0.8":
+"@pcd/gpc@npm:0.0.8":
   version: 0.0.8
   resolution: "@pcd/gpc@npm:0.0.8"
   dependencies:
@@ -2104,6 +2096,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pcd/gpc@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@pcd/gpc@npm:0.3.0"
+  dependencies:
+    "@pcd/gpcircuits": 0.4.0
+    "@pcd/pod": 0.4.0
+    "@pcd/util": 0.8.0
+    "@semaphore-protocol/identity": ^3.15.2
+    json-bigint: ^1.0.0
+    lodash: ^4.17.21
+    semaphore-identity-v4: "npm:@semaphore-protocol/identity@^4.0.3"
+    snarkjs: ^0.7.4
+    url-join: ^4.0.1
+    valibot: ^0.42.1
+  checksum: 380c2fc4d85c49d8aac75bd82399a534ebbc8969a2ec5d605df734a7ceffbcdce08549ea96b5ba51b54511523305394ba4817ab298a0769444583a426b576d32
+  languageName: node
+  linkType: hard
+
 "@pcd/gpcircuits@npm:0.1.7":
   version: 0.1.7
   resolution: "@pcd/gpcircuits@npm:0.1.7"
@@ -2113,6 +2123,18 @@ __metadata:
     snarkjs: ^0.7.4
     url-join: 4.0.1
   checksum: 71e563407e191b709e4c97bfa4038653df09c86fb44741bca8a4fc1fa4a5b1080a694dcfa86fb417ab9a343120a9935bf78dc33fc26065f37c0dacac0735871c
+  languageName: node
+  linkType: hard
+
+"@pcd/gpcircuits@npm:0.4.0":
+  version: 0.4.0
+  resolution: "@pcd/gpcircuits@npm:0.4.0"
+  dependencies:
+    "@pcd/pod": 0.4.0
+    fastfile: 0.0.20
+    snarkjs: ^0.7.4
+    url-join: 4.0.1
+  checksum: 9194388b4a736cfef1bcb56a05265cbb0457319ce9effe4a24e10324e3ce069472cf67c11d0f9f030fc08a203b9ae4d5ac7beb3e82850f92f96650f9c63ea202
   languageName: node
   linkType: hard
 
@@ -2139,6 +2161,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pcd/pod@npm:0.4.0, @pcd/pod@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@pcd/pod@npm:0.4.0"
+  dependencies:
+    "@pcd/util": 0.8.0
+    "@zk-kit/eddsa-poseidon": 1.0.3
+    "@zk-kit/lean-imt": 2.2.1
+    "@zk-kit/utils": 1.2.1
+    js-sha256: ^0.10.1
+    poseidon-lite: ^0.3.0
+  checksum: 5bebdf366d6d19e71a8f0540049b3da1f942a2616034a92bf860882037f7c07ad0610deaa82a2c7a3b4a9dd5e131d07d4ec9d59e770e1624e96490357ef297a3
+  languageName: node
+  linkType: hard
+
 "@pcd/util@npm:0.5.4":
   version: 0.5.4
   resolution: "@pcd/util@npm:0.5.4"
@@ -2149,6 +2185,19 @@ __metadata:
     secure-random: ^1.1.2
     uuid: ^9.0.0
   checksum: f9d73889ab0c447e1884e1b0ad543e23fe44c611f0679480880cb56d798bb2dc0044164dc3a43627935c9442cfd9c05b51c04fcca354e2afc527a439209b6aef
+  languageName: node
+  linkType: hard
+
+"@pcd/util@npm:0.8.0, @pcd/util@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@pcd/util@npm:0.8.0"
+  dependencies:
+    buffer: ^6.0.3
+    email-validator: ^2.0.4
+    js-sha256: ^0.10.1
+    secure-random: ^1.1.2
+    uuid: ^9.0.0
+  checksum: a378bfbde8c3f5df9ccf333b52db93bf7992d6f78eb919e59b386fe4bb053af5489a2375b41b3f4ab2cdc739adc4e326830aff4d2e1d694e4585e0ab1c0911b5
   languageName: node
   linkType: hard
 
@@ -2378,8 +2427,10 @@ __metadata:
   dependencies:
     "@frogcrypto/shared": ^0.0.0
     "@heroicons/react": ~2.0.11
-    "@parcnet-js/app-connector": ^1.0.0
-    "@pcd/pod": ^0.1.7
+    "@parcnet-js/app-connector": ^1.1.5
+    "@pcd/gpc": ^0.3.0
+    "@pcd/pod": ^0.4.0
+    "@pcd/util": ^0.8.0
     "@rainbow-me/rainbowkit": 2.1.5
     "@tanstack/react-query": ~5.28.6
     "@trivago/prettier-plugin-sort-imports": ~4.1.1
@@ -2409,6 +2460,7 @@ __metadata:
     react-copy-to-clipboard: ~5.1.0
     react-dom: ~18.2.0
     react-hot-toast: ~2.4.0
+    rollup-plugin-node-polyfills: ^0.2.1
     tailwindcss: ~3.4.3
     type-fest: ~4.6.0
     typescript: 5.5.3
@@ -2442,7 +2494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semaphore-protocol/identity@npm:4.0.3, @semaphore-protocol/identity@npm:^4.0.3":
+"@semaphore-protocol/identity@npm:4.0.3, @semaphore-protocol/identity@npm:^4.0.3, semaphore-identity-v4@npm:@semaphore-protocol/identity@^4.0.3":
   version: 4.0.3
   resolution: "@semaphore-protocol/identity@npm:4.0.3"
   dependencies:
@@ -4231,6 +4283,15 @@ __metadata:
   dependencies:
     "@zk-kit/utils": 1.2.0
   checksum: 79c6cf56e1b416af692b56a7753aa36f9b76cb987801369f4a872d6d11a064b7d6b3e8e0d4a9c16647e691593e9834f9064ba69dbcf27e01d057f6910bd5c1aa
+  languageName: node
+  linkType: hard
+
+"@zk-kit/lean-imt@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@zk-kit/lean-imt@npm:2.2.1"
+  dependencies:
+    "@zk-kit/utils": 1.2.1
+  checksum: 23150fef05d6bf9436a6c96e5333855a8c1816ae180aa1577adc651a3351f7b842ca1fdac3bbc6d1f6cb0a57f9246785e1f0cb0b2507c16b4d9eb9421e18269f
   languageName: node
   linkType: hard
 
@@ -7546,6 +7607,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"estree-walker@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "estree-walker@npm:0.6.1"
+  checksum: 9d6f82a4921f11eec18f8089fb3cce6e53bcf45a8e545c42a2674d02d055fb30f25f90495f8be60803df6c39680c80dcee7f944526867eb7aa1fc9254883b23d
+  languageName: node
+  linkType: hard
+
 "esutils@npm:^2.0.2":
   version: 2.0.3
   resolution: "esutils@npm:2.0.3"
@@ -10537,6 +10605,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.25.3":
+  version: 0.25.9
+  resolution: "magic-string@npm:0.25.9"
+  dependencies:
+    sourcemap-codec: ^1.4.8
+  checksum: 9a0e55a15c7303fc360f9572a71cffba1f61451bc92c5602b1206c9d17f492403bf96f946dfce7483e66822d6b74607262e24392e87b0ac27b786e69a40e9b1a
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^3.1.0":
   version: 3.1.0
   resolution: "make-dir@npm:3.1.0"
@@ -12941,6 +13018,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rollup-plugin-inject@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "rollup-plugin-inject@npm:3.0.2"
+  dependencies:
+    estree-walker: ^0.6.1
+    magic-string: ^0.25.3
+    rollup-pluginutils: ^2.8.1
+  checksum: a014972c80fe34b8c8154056fa2533a8440066a31de831e3793fc21b15d108d92c22d8f7f472397bd5783d7c5e04d8cbf112fb72c5a26e997726e4eb090edad1
+  languageName: node
+  linkType: hard
+
+"rollup-plugin-node-polyfills@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "rollup-plugin-node-polyfills@npm:0.2.1"
+  dependencies:
+    rollup-plugin-inject: ^3.0.0
+  checksum: e84645212c443aca3cfae2ba69f01c6d8c5c250f0bf651416b69a4572b60aae9da7cdd687de3ab9b903f7a1ab96b06b71f0c4927d1b02a37485360d2b563937b
+  languageName: node
+  linkType: hard
+
 "rollup-plugin-visualizer@npm:^5.9.2":
   version: 5.12.0
   resolution: "rollup-plugin-visualizer@npm:5.12.0"
@@ -12957,6 +13054,15 @@ __metadata:
   bin:
     rollup-plugin-visualizer: dist/bin/cli.js
   checksum: 17dc10a93d4bd457c8bb7796a57c284487fb00f4b9703a33a1a954f5d40c66a89b24aca98564569922456f4fa8f72281c3ef96a95502195e6930b3fac62fce8e
+  languageName: node
+  linkType: hard
+
+"rollup-pluginutils@npm:^2.8.1":
+  version: 2.8.2
+  resolution: "rollup-pluginutils@npm:2.8.2"
+  dependencies:
+    estree-walker: ^0.6.1
+  checksum: 339fdf866d8f4ff6e408fa274c0525412f7edb01dc46b5ccda51f575b7e0d20ad72965773376fb5db95a77a7fcfcab97bf841ec08dbadf5d6b08af02b7a2cf5e
   languageName: node
   linkType: hard
 
@@ -13531,6 +13637,13 @@ __metadata:
   dependencies:
     amdefine: ">=0.0.4"
   checksum: 95fe800c3a93f8c0b9516c033bfc75f2678e27d2e6c0b23ae222f5ddc4afa0a39bd0be15d1c0a1e766d388f3761cc854a053a4330f49242e6045e1a4f9dc0e26
+  languageName: node
+  linkType: hard
+
+"sourcemap-codec@npm:^1.4.8":
+  version: 1.4.8
+  resolution: "sourcemap-codec@npm:1.4.8"
+  checksum: b57981c05611afef31605732b598ccf65124a9fcb03b833532659ac4d29ac0f7bfacbc0d6c5a28a03e84c7510e7e556d758d0bb57786e214660016fb94279316
   languageName: node
   linkType: hard
 
@@ -15052,7 +15165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"valibot@npm:^0.42.0":
+"valibot@npm:^0.42.0, valibot@npm:^0.42.1":
   version: 0.42.1
   resolution: "valibot@npm:0.42.1"
   peerDependencies:
