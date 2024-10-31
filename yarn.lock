@@ -2006,39 +2006,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcnet-js/app-connector@npm:^1.1.5":
-  version: 1.1.5
-  resolution: "@parcnet-js/app-connector@npm:1.1.5"
+"@parcnet-js/app-connector@npm:^1.1.8":
+  version: 1.1.8
+  resolution: "@parcnet-js/app-connector@npm:1.1.8"
   dependencies:
-    "@parcnet-js/client-rpc": 1.1.4
-    "@parcnet-js/podspec": 1.1.2
+    "@parcnet-js/client-rpc": 1.1.6
+    "@parcnet-js/podspec": 1.1.3
     "@pcd/gpc": ^0.3.0
     "@pcd/pod": ^0.4.0
     nanoevents: ^9.0.0
     valibot: ^0.42.0
-  checksum: 9e1075d25884d11ff5f182a5c97d2c4619cce57bac4ce119ea53254c916043a796f42791f5c68bad0bff2d215e1f1b71698170687697e592f2662e99b1f1f267
+  checksum: 0ca0e8a26f5ea59168508125b24ebd3aa1b3d783ae6b5a5c65d18e380806c8c41120ad4c8876715f100cfa9a596e1c0fd204abcd8d65771edf7ebc1b0476bbb8
   languageName: node
   linkType: hard
 
-"@parcnet-js/client-rpc@npm:1.1.4":
-  version: 1.1.4
-  resolution: "@parcnet-js/client-rpc@npm:1.1.4"
+"@parcnet-js/client-rpc@npm:1.1.6":
+  version: 1.1.6
+  resolution: "@parcnet-js/client-rpc@npm:1.1.6"
   dependencies:
-    "@parcnet-js/podspec": 1.1.2
+    "@parcnet-js/podspec": 1.1.3
     "@pcd/gpc": ^0.3.0
     "@pcd/pod": ^0.4.0
     valibot: ^0.42.0
-  checksum: 898e5d1cde3b0ed3d4bd57ff012a096fdb0c617df0143d23bfac90469b28c90776bf5cd3424261d2d9111e5e897b2376efe1d40f9754b6899d1a2eb77bf7a7ee
+  checksum: 6efa7269099a47f444f40b51dd5baec72e80495c7920a3976732ba7c0eaae03bd70d4cb40b7f85ed9b99658256ec52f324e2aab8e6988ff3c0eb30d786f651c0
   languageName: node
   linkType: hard
 
-"@parcnet-js/podspec@npm:1.1.2":
-  version: 1.1.2
-  resolution: "@parcnet-js/podspec@npm:1.1.2"
+"@parcnet-js/podspec@npm:1.1.3":
+  version: 1.1.3
+  resolution: "@parcnet-js/podspec@npm:1.1.3"
   dependencies:
     "@pcd/gpc": ^0.3.0
     "@pcd/pod": ^0.4.0
-  checksum: e23f694353834119d264dee1aa52278e46dbeaf1dc5081578ddb53c1268a7c3c34c376f4b9ceb0d5220c68ce08885e90724bd983a9328d6ebd0b89c99c6f0a23
+  checksum: 92022d52f8833b91254061efa7a3e33966f660498f9d9b434a2a05561457d223323ba86639b017ae0654b1d2b60507c7aad0d8f3334174862e851563b5eb6d3e
   languageName: node
   linkType: hard
 
@@ -2175,6 +2175,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pcd/pod@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@pcd/pod@npm:0.5.0"
+  dependencies:
+    "@pcd/util": 0.9.0
+    "@zk-kit/eddsa-poseidon": ~1.0.4
+    "@zk-kit/lean-imt": ^2.2.1
+    "@zk-kit/utils": ^1.2.1
+    js-sha256: ^0.10.1
+    poseidon-lite: ^0.3.0
+  checksum: 17164ed7ab99d79c8ef825893b62cb8d9f00f6a6f7327a42ab87f8823d0336be700aafc3a243dfac5a9088192b436c637ecf6a7ee4004075babdff35d1cb1f32
+  languageName: node
+  linkType: hard
+
 "@pcd/util@npm:0.5.4":
   version: 0.5.4
   resolution: "@pcd/util@npm:0.5.4"
@@ -2188,7 +2202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pcd/util@npm:0.8.0, @pcd/util@npm:^0.8.0":
+"@pcd/util@npm:0.8.0":
   version: 0.8.0
   resolution: "@pcd/util@npm:0.8.0"
   dependencies:
@@ -2198,6 +2212,19 @@ __metadata:
     secure-random: ^1.1.2
     uuid: ^9.0.0
   checksum: a378bfbde8c3f5df9ccf333b52db93bf7992d6f78eb919e59b386fe4bb053af5489a2375b41b3f4ab2cdc739adc4e326830aff4d2e1d694e4585e0ab1c0911b5
+  languageName: node
+  linkType: hard
+
+"@pcd/util@npm:0.9.0, @pcd/util@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@pcd/util@npm:0.9.0"
+  dependencies:
+    buffer: ^6.0.3
+    email-validator: ^2.0.4
+    js-sha256: ^0.10.1
+    secure-random: ^1.1.2
+    uuid: ^9.0.0
+  checksum: 8d4566926bf250bbfc1faaa9ec61260b40da8b04bf5f36a2b1c418873b56a45f0f810aa1c97ffddf68d206c58a9ff677336706ccc280b59467bb33396d209b34
   languageName: node
   linkType: hard
 
@@ -2427,10 +2454,10 @@ __metadata:
   dependencies:
     "@frogcrypto/shared": ^0.0.0
     "@heroicons/react": ~2.0.11
-    "@parcnet-js/app-connector": ^1.1.5
+    "@parcnet-js/app-connector": ^1.1.8
     "@pcd/gpc": ^0.3.0
-    "@pcd/pod": ^0.4.0
-    "@pcd/util": ^0.8.0
+    "@pcd/pod": ^0.5.0
+    "@pcd/util": ^0.9.0
     "@rainbow-me/rainbowkit": 2.1.5
     "@tanstack/react-query": ~5.28.6
     "@trivago/prettier-plugin-sort-imports": ~4.1.1
@@ -4268,6 +4295,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zk-kit/eddsa-poseidon@npm:~1.0.4":
+  version: 1.0.4
+  resolution: "@zk-kit/eddsa-poseidon@npm:1.0.4"
+  dependencies:
+    "@zk-kit/baby-jubjub": 1.0.3
+    "@zk-kit/utils": 1.2.1
+    buffer: 6.0.3
+    poseidon-lite: 0.3.0
+  checksum: 21ce4f6d88fe6fc2bf9ec3315380ecb6a365a23fca28297cac59edd577a68c8d4d21a0bb2efc3babda8b9c574acb961ca6a0d0b99af5d763b091d14a6c299071
+  languageName: node
+  linkType: hard
+
 "@zk-kit/lean-imt@npm:2.0.1":
   version: 2.0.1
   resolution: "@zk-kit/lean-imt@npm:2.0.1"
@@ -4286,7 +4325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zk-kit/lean-imt@npm:2.2.1":
+"@zk-kit/lean-imt@npm:2.2.1, @zk-kit/lean-imt@npm:^2.2.1":
   version: 2.2.1
   resolution: "@zk-kit/lean-imt@npm:2.2.1"
   dependencies:
@@ -12125,17 +12164,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"poseidon-lite@npm:0.3.0, poseidon-lite@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "poseidon-lite@npm:0.3.0"
+  checksum: 49e46dc43d222f12b76bd3758ef4d4a507d9c788d4221a0e29ad9d29a7ddff54d1e0f9fc58dff15aba8bef87b36b0a47925af5cc4663e2724b14243ef6076247
+  languageName: node
+  linkType: hard
+
 "poseidon-lite@npm:^0.2.1":
   version: 0.2.1
   resolution: "poseidon-lite@npm:0.2.1"
   checksum: ecd420d48ffafc99408f9ef6d124d21a0d12d089f1cfc20bcd97a0b0364e7526f8d4747a2b72da2157f18d569c9a4b19beb5958fd8509d87f8a65edf6979c168
-  languageName: node
-  linkType: hard
-
-"poseidon-lite@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "poseidon-lite@npm:0.3.0"
-  checksum: 49e46dc43d222f12b76bd3758ef4d4a507d9c788d4221a0e29ad9d29a7ddff54d1e0f9fc58dff15aba8bef87b36b0a47925af5cc4663e2724b14243ef6076247
   languageName: node
   linkType: hard
 
