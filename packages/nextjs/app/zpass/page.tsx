@@ -126,6 +126,8 @@ const ZuAuth = () => {
       if (result.success) {
         const boundConfig = result.boundConfig;
         const revealedClaims = result.revealedClaims;
+        console.log("The revealed claims", revealedClaims);
+        console.log("The piA is", result.proof.pi);
 
         const circuit = gpcPreVerify(boundConfig, revealedClaims);
         const pubSignals = ProtoPODGPC.makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
