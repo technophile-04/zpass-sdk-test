@@ -8,7 +8,7 @@ import { ProtoPODGPC } from "@pcd/gpcircuits";
 import { POD, PODEntries } from "@pcd/pod";
 import { PartialDeep } from "type-fest";
 import { useAccount } from "wagmi";
-import { useScaffoldContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
 
 export interface PODData {
@@ -72,9 +72,7 @@ const ZuAuth = () => {
   const { address: connectedAddress } = useAccount();
   const [z, setZ] = useState<ParcnetAPI | null>(null);
 
-  const { data: YourContract } = useScaffoldContract({
-    contractName: "YourContract",
-  });
+  const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("YourContract");
 
   const handleAuth = async () => {
     try {
@@ -148,21 +146,26 @@ const ZuAuth = () => {
         const rarity = revealedClaims.pods.FROGCRYPTO?.entries?.rarity.value as any as bigint;
         const owner = revealedClaims.pods.FROGCRYPTO?.entries?.owner.value as any as bigint;
 
-        const readResult = await YourContract?.read.verifyAndExtractFrog([
-          {
-            _pA: result.proof.pi_a.slice(0, -1),
-            _pB: result.proof.pi_b.slice(0, -1),
-            _pC: result.proof.pi_c.slice(0, -1),
-            _pubSignals: pubSignals as any,
-          },
-          beauty,
-          biome,
-          intelligence,
-          jump,
-          speed,
-          rarity,
-          owner,
-        ]);
+        const readResult = await writeYourContractAsync({
+          functionName: "mintFrog",
+          args: [
+            {
+              _pA: result.proof.pi_a.slice(0, -1),
+              _pB: result.proof.pi_b.slice(0, -1),
+              _pC: result.proof.pi_c.slice(0, -1),
+              _pubSignals: pubSignals as any,
+            },
+            {
+              beauty,
+              biome,
+              intelligence,
+              jump,
+              speed,
+              rarity,
+              owner,
+            },
+          ],
+        });
 
         console.log("The read result", readResult);
       }
@@ -170,7 +173,6 @@ const ZuAuth = () => {
       console.log("The result after the insert", result);
     } catch (e) {
       console.log("error", e);
-      notification.error("Oops! Something went wrong");
     }
   };
 
