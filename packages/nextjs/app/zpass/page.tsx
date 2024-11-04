@@ -25,8 +25,6 @@ export function podToPODData(pod: POD): PODData {
   };
 }
 
-// TODO: Dynamically load the auth button
-
 type ForgCryptToType = PartialDeep<typeof FrogSpec.schema>;
 
 const entriesToProve: ForgCryptToType = {
@@ -71,6 +69,7 @@ const myZapp: Zapp = {
 const ZuAuth = () => {
   const { address: connectedAddress } = useAccount();
   const [z, setZ] = useState<ParcnetAPI | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("YourContract");
 
@@ -81,28 +80,32 @@ const ZuAuth = () => {
       const element = document.getElementById("zpass-app-connector") as HTMLElement;
 
       if (!element) {
-        console.log("Enable to find app connector element");
+        console.log("Unable to find app connector element");
         notification.error("Oops! Something went wrong");
         return;
       }
 
       console.log("The element was found", element);
-      // The URL to Zupass
       const clientUrl = "https://zupass.org";
 
-      // Connect!
+      setIsLoading(true);
       const zCon = await connect(myZapp, element, clientUrl);
       setZ(zCon);
+      setIsLoading(false);
 
-      notification.success("Please check console for more logs");
+      notification.success("Authentication successful!");
     } catch (e) {
       console.log("error", e);
+      setIsLoading(false);
+      notification.error("Authentication failed");
     }
   };
 
-  const handleProve = async () => {
+  const handleMintNFT = async () => {
     try {
       if (!z) return notification.error("Please authenticate first");
+
+      setIsLoading(true);
       const result = await z.gpc.prove({
         request: {
           pods: {
@@ -136,17 +139,20 @@ const ZuAuth = () => {
         const pubSignals = ProtoPODGPC.makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
         console.log("The public signals", pubSignals);
 
-        console.log("The fields are:", revealedClaims.pods.FROGCRYPTO?.entries);
+        const frogStats = revealedClaims.pods.FROGCRYPTO?.entries;
+        const frogName = frogStats?.name.value;
 
-        const beauty = revealedClaims.pods.FROGCRYPTO?.entries?.beauty.value as any as bigint;
-        const biome = revealedClaims.pods.FROGCRYPTO?.entries?.biome.value as any as bigint;
-        const intelligence = revealedClaims.pods.FROGCRYPTO?.entries?.intelligence.value as any as bigint;
-        const jump = revealedClaims.pods.FROGCRYPTO?.entries?.jump.value as any as bigint;
-        const speed = revealedClaims.pods.FROGCRYPTO?.entries?.speed.value as any as bigint;
-        const rarity = revealedClaims.pods.FROGCRYPTO?.entries?.rarity.value as any as bigint;
-        const owner = revealedClaims.pods.FROGCRYPTO?.entries?.owner.value as any as bigint;
+        const beauty = frogStats?.beauty.value as any as bigint;
+        const biome = frogStats?.biome.value as any as bigint;
+        const intelligence = frogStats?.intelligence.value as any as bigint;
+        const jump = frogStats?.jump.value as any as bigint;
+        const speed = frogStats?.speed.value as any as bigint;
+        const rarity = frogStats?.rarity.value as any as bigint;
+        const owner = frogStats?.owner.value as any as bigint;
 
-        const readResult = await writeYourContractAsync({
+        notification.info("Minting your Frog NFT...");
+
+        const mintResult = await writeYourContractAsync({
           functionName: "mintFrog",
           args: [
             {
@@ -167,24 +173,30 @@ const ZuAuth = () => {
           ],
         });
 
-        console.log("The read result", readResult);
+        console.log("Mint transaction:", mintResult);
+        notification.success(`Successfully minted Frog NFT: ${frogName}`);
       }
-
-      console.log("The result after the insert", result);
     } catch (e) {
       console.log("error", e);
+      notification.error("Failed to mint NFT");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <main className={`flex min-h-screen flex-col items-center justify-between p-24`}>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full text-sm flex space-x-2">
-        <button onClick={handleAuth} className="btn btn-primary">
-          Auth
-        </button>
-        <button onClick={handleProve} className="btn btn-primary">
-          Prove
-        </button>
+        {!z && (
+          <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
+            {isLoading ? "Connecting..." : "Connect Zupass"}
+          </button>
+        )}
+        {z && (
+          <button onClick={handleMintNFT} className="btn btn-primary" disabled={isLoading}>
+            {isLoading ? "Minting..." : "Mint Frog NFT"}
+          </button>
+        )}
       </div>
     </main>
   );

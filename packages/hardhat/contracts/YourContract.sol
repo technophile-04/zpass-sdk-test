@@ -125,8 +125,8 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 		uint256 _tokenId
 	) public view override returns (string memory) {
 		require(_exists(_tokenId), "Token does not exist");
-		// You can customize this to return your frog metadata
-		return "https://your-api.com/frog-metadata/";
+		// customize this to return your frog metadata
+		return "https://bg/frog-metadata/";
 	}
 
 	function getFrogOwner(uint256 tokenId) public view returns (address) {
