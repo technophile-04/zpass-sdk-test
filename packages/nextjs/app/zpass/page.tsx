@@ -8,6 +8,7 @@ import { ProtoPODGPC } from "@pcd/gpcircuits";
 import { POD, PODEntries } from "@pcd/pod";
 import { PartialDeep } from "type-fest";
 import { useAccount } from "wagmi";
+import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
 
 export interface PODData {
@@ -71,6 +72,10 @@ const ZuAuth = () => {
   const { address: connectedAddress } = useAccount();
   const [z, setZ] = useState<ParcnetAPI | null>(null);
 
+  const { data: YourContract } = useScaffoldContract({
+    contractName: "YourContract",
+  });
+
   const handleAuth = async () => {
     try {
       if (!connectedAddress) return notification.error("Please connect your address");
@@ -127,11 +132,39 @@ const ZuAuth = () => {
         const boundConfig = result.boundConfig;
         const revealedClaims = result.revealedClaims;
         console.log("The revealed claims", revealedClaims);
-        console.log("The piA is", result.proof.pi);
+        console.log("The proof is:", result.proof);
 
         const circuit = gpcPreVerify(boundConfig, revealedClaims);
         const pubSignals = ProtoPODGPC.makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
         console.log("The public signals", pubSignals);
+
+        console.log("The fields are:", revealedClaims.pods.FROGCRYPTO?.entries);
+
+        const beauty = revealedClaims.pods.FROGCRYPTO?.entries?.beauty.value as any as bigint;
+        const biome = revealedClaims.pods.FROGCRYPTO?.entries?.biome.value as any as bigint;
+        const intelligence = revealedClaims.pods.FROGCRYPTO?.entries?.intelligence.value as any as bigint;
+        const jump = revealedClaims.pods.FROGCRYPTO?.entries?.jump.value as any as bigint;
+        const speed = revealedClaims.pods.FROGCRYPTO?.entries?.speed.value as any as bigint;
+        const rarity = revealedClaims.pods.FROGCRYPTO?.entries?.rarity.value as any as bigint;
+        const owner = revealedClaims.pods.FROGCRYPTO?.entries?.owner.value as any as bigint;
+
+        const readResult = await YourContract?.read.verifyAndExtractFrog([
+          {
+            _pA: result.proof.pi_a.slice(0, -1),
+            _pB: result.proof.pi_b.slice(0, -1),
+            _pC: result.proof.pi_c.slice(0, -1),
+            _pubSignals: pubSignals as any,
+          },
+          beauty,
+          biome,
+          intelligence,
+          jump,
+          speed,
+          rarity,
+          owner,
+        ]);
+
+        console.log("The read result", readResult);
       }
 
       console.log("The result after the insert", result);
