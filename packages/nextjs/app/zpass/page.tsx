@@ -74,6 +74,8 @@ const ZuAuth = () => {
   const { address: connectedAddress } = useAccount();
   const [z, setZ] = useState<ParcnetAPI | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [story, setStory] = useState<string | null>(null);
+  const [mintedFrogName, setMintedFrogName] = useState<string | null>(null);
 
   const { signMessageAsync } = useSignMessage();
 
@@ -108,8 +110,9 @@ const ZuAuth = () => {
   const handleMintNFT = async () => {
     try {
       if (!z) return notification.error("Please authenticate first");
-
       setIsLoading(true);
+      setStory(null); // Reset story when starting new mint
+
       const result = await z.gpc.prove({
         request: {
           pods: {
@@ -195,6 +198,8 @@ const ZuAuth = () => {
         }
 
         console.log("The data is", data);
+        setStory(data.story);
+        setMintedFrogName(frogName as string);
         notification.success(`Successfully minted Frog NFT: ${frogName}`);
       }
     } catch (e) {
@@ -207,16 +212,28 @@ const ZuAuth = () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full text-sm flex space-x-2">
-        {!z && (
-          <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
-            {isLoading ? "Connecting..." : "Connect Zupass"}
-          </button>
-        )}
-        {z && (
-          <button onClick={handleMintNFT} className="btn btn-primary" disabled={isLoading}>
-            {isLoading ? "Minting..." : "Mint Frog NFT"}
-          </button>
+      <div className="z-10 max-w-5xl w-full flex flex-col gap-8">
+        <div className="flex space-x-2">
+          {!z && (
+            <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
+              {isLoading ? "Connecting..." : "Connect Zupass"}
+            </button>
+          )}
+          {z && (
+            <button onClick={handleMintNFT} className="btn btn-primary" disabled={isLoading}>
+              {isLoading ? "Minting..." : "Mint Frog NFT"}
+            </button>
+          )}
+        </div>
+
+        {story && mintedFrogName && (
+          <div className="card w-full bg-base-200 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title text-2xl font-bold text-primary">The Tale of {mintedFrogName}</h2>
+              <div className="divider"></div>
+              <p className="text-lg italic leading-relaxed">{story}</p>
+            </div>
+          </div>
         )}
       </div>
     </main>

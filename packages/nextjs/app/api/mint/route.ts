@@ -1,5 +1,6 @@
 // app/api/mint/route.ts
 import { NextResponse } from "next/server";
+import OpenAI from "openai";
 import { createWalletClient, fallback, http, verifyMessage } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -20,6 +21,40 @@ const walletClient = createWalletClient({
   transport: fallback(rpcFallbacks),
   account: privateKeyToAccount(wallet_private_key),
 });
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+async function generateFrogStory(frogStats: FrogStats): Promise<string> {
+  const prompt = `
+Create a short, mystical story (max 4 sentences) about a priest juicing this frog in a magical ritual. Use these attributes in creative ways:
+
+Name: ${frogStats.name}
+Beauty: ${frogStats.beauty}/10
+Intelligence: ${frogStats.intelligence}/10
+Jump: ${frogStats.jump}/10
+Speed: ${frogStats.speed}/10
+Rarity: ${frogStats.rarity}/10
+Biome: ${frogStats.biome}
+
+Description: ${frogStats.description}
+`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: prompt }],
+      model: "gpt-3.5-turbo",
+      temperature: 0.7,
+      max_tokens: 150,
+    });
+
+    return completion.choices[0].message.content || "Failed to generate story";
+  } catch (error) {
+    console.error("Error generating story:", error);
+    return "In a mystical ceremony, a priest encountered this remarkable frog.";
+  }
+}
 
 type ProofData = {
   pi_a: string[];
@@ -127,11 +162,17 @@ export async function POST(req: Request) {
       ],
     });
 
+    const story = await generateFrogStory({
+      ...body.frogStats,
+      description,
+    });
+
     return NextResponse.json(
       {
         success: true,
         message: "NFT minted successfully",
         txHash: hash,
+        story,
       },
       { status: 200 },
     );
