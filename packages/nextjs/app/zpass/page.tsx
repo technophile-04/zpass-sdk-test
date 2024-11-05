@@ -57,12 +57,13 @@ const entriesToProve: ForgCryptToType = {
   },
 };
 
+// TODO: Remove console logs
 const myZapp: Zapp = {
   name: "Frog Bank",
   permissions: {
-    READ_POD: { collections: ["FROGCRYPTO"] },
-    INSERT_POD: { collections: ["FROGCRYPTO"] },
-    REQUEST_PROOF: { collections: ["FROGCRYPTO"] },
+    READ_POD: { collections: ["FrogCrypto (alpha)"] },
+    INSERT_POD: { collections: ["FrogCrypto (alpha)"] },
+    REQUEST_PROOF: { collections: ["FrogCrypto (alpha)"] },
   },
 };
 
@@ -86,7 +87,7 @@ const ZuAuth = () => {
       }
 
       console.log("The element was found", element);
-      const clientUrl = "https://zupass.org";
+      const clientUrl = "https://staging.zupass.org";
 
       setIsLoading(true);
       const zCon = await connect(myZapp, element, clientUrl);
@@ -140,8 +141,11 @@ const ZuAuth = () => {
         console.log("The public signals", pubSignals);
 
         const frogStats = revealedClaims.pods.FROGCRYPTO?.entries;
+        console.log("The reveleadClaims", revealedClaims);
+        console.log("The frog stats", frogStats);
         const frogName = frogStats?.name.value;
 
+        console.log("The frogId is", frogStats?.frogId.value);
         const beauty = frogStats?.beauty.value as any as bigint;
         const biome = frogStats?.biome.value as any as bigint;
         const intelligence = frogStats?.intelligence.value as any as bigint;

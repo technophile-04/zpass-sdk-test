@@ -1,0 +1,2 @@
+- [ ] Get frogs inserted directly from frogcrypto
+- [ ] Get FrogId on chain

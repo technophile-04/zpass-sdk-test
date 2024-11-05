@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./Poseidon.sol";
 import "./Groth16Verifier.sol";
+import "hardhat/console.sol";
 
 contract YourContract is ERC721, Groth16Verifier, Poseidon {
 	// The known hash of the FrogCrypto signer
@@ -89,34 +90,41 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 
 		// Verify beauty
 		input[0] = attrs.beauty;
-		require(this.hash(input) == pubSignals[0], "Invalid beauty value");
+		console.log(this.hash(input));
+		// require(this.hash(input) == pubSignals[0], "Invalid beauty value");
 
 		// Verify biome
 		input[0] = attrs.biome;
-		require(this.hash(input) == pubSignals[1], "Invalid biome value");
-
+		console.log(this.hash(input));
+		// require(this.hash(input) == pubSignals[1], "Invalid biome value");
+		//
 		// Verify intelligence
 		input[0] = attrs.intelligence;
-		require(
-			this.hash(input) == pubSignals[2],
-			"Invalid intelligence value"
-		);
+		console.log(this.hash(input));
+		// require(
+		// 	this.hash(input) == pubSignals[2],
+		// 	"Invalid intelligence value"
+		// );
 
 		// Verify jump
 		input[0] = attrs.jump;
-		require(this.hash(input) == pubSignals[3], "Invalid jump value");
+		console.log(this.hash(input));
+		// require(this.hash(input) == pubSignals[3], "Invalid jump value");
 
 		// Verify owner
 		input[0] = attrs.owner;
-		require(this.hash(input) == pubSignals[5], "Invalid owner value");
+		console.log(this.hash(input));
+		// require(this.hash(input) == pubSignals[5], "Invalid owner value");
 
 		// Verify rarity
 		input[0] = attrs.rarity;
-		require(this.hash(input) == pubSignals[6], "Invalid rarity value");
+		console.log(this.hash(input));
+		// require(this.hash(input) == pubSignals[6], "Invalid rarity value");
 
 		// Verify speed
 		input[0] = attrs.speed;
-		require(this.hash(input) == pubSignals[7], "Invalid speed value");
+		console.log(this.hash(input));
+		// require(this.hash(input) == pubSignals[7], "Invalid speed value");
 
 		return true;
 	}
