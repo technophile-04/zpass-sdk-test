@@ -55,6 +55,9 @@ const entriesToProve: ForgCryptToType = {
   rarity: {
     type: "int",
   },
+  description: {
+    type: "string",
+  },
 };
 
 // TODO: Remove console logs
@@ -124,6 +127,7 @@ const ZuAuth = () => {
                 owner: true,
                 intelligence: true,
                 rarity: true,
+                description: true,
               },
             },
           },
@@ -145,7 +149,6 @@ const ZuAuth = () => {
         console.log("The frog stats", frogStats);
         const frogName = frogStats?.name.value;
 
-        console.log("The frogId is", frogStats?.frogId.value);
         const beauty = frogStats?.beauty.value as any as bigint;
         const biome = frogStats?.biome.value as any as bigint;
         const intelligence = frogStats?.intelligence.value as any as bigint;
