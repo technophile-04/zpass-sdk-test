@@ -7,9 +7,9 @@ import { gpcPreVerify } from "@pcd/gpc";
 import { ProtoPODGPC } from "@pcd/gpcircuits";
 import { POD, PODEntries } from "@pcd/pod";
 import { PartialDeep } from "type-fest";
-import { useAccount } from "wagmi";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
-import { notification } from "~~/utils/scaffold-eth";
+import { useAccount, useSignMessage } from "wagmi";
+import { getParsedError, notification } from "~~/utils/scaffold-eth";
+import { replacer } from "~~/utils/scaffold-eth/common";
 
 export interface PODData {
   entries: PODEntries;
@@ -75,7 +75,7 @@ const ZuAuth = () => {
   const [z, setZ] = useState<ParcnetAPI | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("YourContract");
+  const { signMessageAsync } = useSignMessage();
 
   const handleAuth = async () => {
     try {
@@ -137,16 +137,10 @@ const ZuAuth = () => {
       if (result.success) {
         const boundConfig = result.boundConfig;
         const revealedClaims = result.revealedClaims;
-        console.log("The revealed claims", revealedClaims);
-        console.log("The proof is:", result.proof);
-
         const circuit = gpcPreVerify(boundConfig, revealedClaims);
         const pubSignals = ProtoPODGPC.makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
-        console.log("The public signals", pubSignals);
 
         const frogStats = revealedClaims.pods.FROGCRYPTO?.entries;
-        console.log("The reveleadClaims", revealedClaims);
-        console.log("The frog stats", frogStats);
         const frogName = frogStats?.name.value;
 
         const beauty = frogStats?.beauty.value as any as bigint;
@@ -156,36 +150,56 @@ const ZuAuth = () => {
         const speed = frogStats?.speed.value as any as bigint;
         const rarity = frogStats?.rarity.value as any as bigint;
         const owner = frogStats?.owner.value as any as bigint;
+        const description = frogStats?.description.value as any as string;
 
         notification.info("Minting your Frog NFT...");
-
-        const mintResult = await writeYourContractAsync({
-          functionName: "mintFrog",
-          args: [
-            {
-              _pA: result.proof.pi_a.slice(0, -1),
-              _pB: result.proof.pi_b.slice(0, -1),
-              _pC: result.proof.pi_c.slice(0, -1),
-              _pubSignals: pubSignals as any,
-            },
-            {
-              beauty,
-              biome,
-              intelligence,
-              jump,
-              speed,
-              rarity,
-              owner,
-            },
-          ],
+        const signature = await signMessageAsync({
+          message: `I own ${frogName}`,
         });
 
-        console.log("Mint transaction:", mintResult);
+        // Send data to backend
+        const response = await fetch("/api/mint", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(
+            {
+              proof: {
+                pi_a: result.proof.pi_a.slice(0, -1),
+                pi_b: result.proof.pi_b.slice(0, -1),
+                pi_c: result.proof.pi_c.slice(0, -1),
+                pubSignals: pubSignals,
+              },
+              frogStats: {
+                beauty: beauty.toString(),
+                biome: biome.toString(),
+                intelligence: intelligence.toString(),
+                jump: jump.toString(),
+                speed: speed.toString(),
+                rarity: rarity.toString(),
+                owner: owner.toString(),
+                name: frogName,
+                description,
+              },
+              signature,
+              address: connectedAddress,
+            },
+            replacer,
+          ),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error);
+        }
+
+        console.log("The data is", data);
         notification.success(`Successfully minted Frog NFT: ${frogName}`);
       }
     } catch (e) {
-      console.log("error", e);
-      notification.error("Failed to mint NFT");
+      const errorMessage = getParsedError(e);
+      notification.error(errorMessage);
     } finally {
       setIsLoading(false);
     }

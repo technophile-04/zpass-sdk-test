@@ -90,41 +90,34 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 
 		// Verify beauty
 		input[0] = attrs.beauty;
-		console.log(this.hash(input));
-		// require(this.hash(input) == pubSignals[0], "Invalid beauty value");
+		require(this.hash(input) == pubSignals[0], "Invalid beauty value");
 
 		// Verify biome
 		input[0] = attrs.biome;
-		console.log(this.hash(input));
-		// require(this.hash(input) == pubSignals[1], "Invalid biome value");
-		//
+		require(this.hash(input) == pubSignals[1], "Invalid biome value");
+
 		// Verify intelligence
 		input[0] = attrs.intelligence;
-		console.log(this.hash(input));
-		// require(
-		// 	this.hash(input) == pubSignals[2],
-		// 	"Invalid intelligence value"
-		// );
+		require(
+			this.hash(input) == pubSignals[3],
+			"Invalid intelligence value"
+		);
 
 		// Verify jump
 		input[0] = attrs.jump;
-		console.log(this.hash(input));
-		// require(this.hash(input) == pubSignals[3], "Invalid jump value");
+		require(this.hash(input) == pubSignals[4], "Invalid jump value");
 
 		// Verify owner
 		input[0] = attrs.owner;
-		console.log(this.hash(input));
-		// require(this.hash(input) == pubSignals[5], "Invalid owner value");
+		require(this.hash(input) == pubSignals[6], "Invalid owner value");
 
 		// Verify rarity
 		input[0] = attrs.rarity;
-		console.log(this.hash(input));
-		// require(this.hash(input) == pubSignals[6], "Invalid rarity value");
+		require(this.hash(input) == pubSignals[7], "Invalid rarity value");
 
 		// Verify speed
 		input[0] = attrs.speed;
-		console.log(this.hash(input));
-		// require(this.hash(input) == pubSignals[7], "Invalid speed value");
+		require(this.hash(input) == pubSignals[8], "Invalid speed value");
 
 		return true;
 	}
