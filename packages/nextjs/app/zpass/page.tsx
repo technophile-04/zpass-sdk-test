@@ -78,7 +78,7 @@ const ZuAuth = () => {
   const [z, setZ] = useState<ParcnetAPI | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [story, setStory] = useState<string | null>(null);
-  const [mintedFrogName, setMintedFrogName] = useState<string | null>(null);
+  const [squeezedFrogName, setSqueezedFrogName] = useState<string | null>(null);
 
   const { signMessageAsync } = useSignMessage();
 
@@ -110,11 +110,11 @@ const ZuAuth = () => {
     }
   };
 
-  const handleMintNFT = async () => {
+  const handleSqueeze = async () => {
     try {
       if (!z) return notification.error("Please authenticate first");
       setIsLoading(true);
-      setStory(null); // Reset story when starting new mint
+      setStory(null); // Reset story when starting new squeeze
 
       const result = await z.gpc.prove({
         request: {
@@ -164,13 +164,13 @@ const ZuAuth = () => {
         const temperament = frogStats?.temperament.value as any as bigint;
         const frogId = frogStats?.frogId.value as any as bigint;
 
-        notification.info("Minting your Frog NFT...");
+        notification.info("Squeezing your Frog...");
         const signature = await signMessageAsync({
           message: `I own ${frogName}`,
         });
 
         // Send data to backend
-        const response = await fetch("/api/mint", {
+        const response = await fetch("/api/squeeze", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -210,8 +210,8 @@ const ZuAuth = () => {
 
         console.log("The data is", data);
         setStory(data.story);
-        setMintedFrogName(frogName as string);
-        notification.success(`Successfully minted Frog NFT: ${frogName}`);
+        setSqueezedFrogName(frogName as string);
+        notification.success(`Successfully squeezed Frog: ${frogName}`);
       }
     } catch (e) {
       const errorMessage = getParsedError(e);
@@ -231,16 +231,16 @@ const ZuAuth = () => {
             </button>
           )}
           {z && (
-            <button onClick={handleMintNFT} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Minting..." : "Mint Frog NFT"}
+            <button onClick={handleSqueeze} className="btn btn-primary" disabled={isLoading}>
+              {isLoading ? "Squeezing..." : "Squeeze Frog"}
             </button>
           )}
         </div>
 
-        {story && mintedFrogName && (
+        {story && squeezedFrogName && (
           <div className="card w-full bg-base-200 shadow-xl">
             <div className="card-body">
-              <h2 className="card-title text-2xl font-bold text-primary">The Tale of {mintedFrogName}</h2>
+              <h2 className="card-title text-2xl font-bold text-primary">The Tale of {squeezedFrogName}</h2>
               <div className="divider"></div>
               <p className="text-lg italic leading-relaxed">{story}</p>
             </div>
