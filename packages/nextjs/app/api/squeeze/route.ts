@@ -82,6 +82,7 @@ type SqueezeRequestBody = {
   frogStats: FrogStats;
   signature: string;
   address: string;
+  timestamp: number;
 };
 
 // Utility function to convert string arrays to BigInt arrays
@@ -130,9 +131,11 @@ export async function POST(req: Request) {
     console.log("The acutal values are:", actualStats);
     const convertedFrogStats = convertFrogStatsToBigInt(actualStats);
 
+    const message = `You are signing that you own ${body.frogStats.name} at timestamp ${body.timestamp} on https://frogcrypto-squeeze.com`
+
     // Verify signature
     const isValidSignature = await verifyMessage({
-      message: `I own ${body.frogStats.name}`,
+      message,
       signature: body.signature as `0x${string}`,
       address: body.address as `0x${string}`,
     });

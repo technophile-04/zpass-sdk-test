@@ -167,8 +167,9 @@ const Home = () => {
         const frogId = frogStats?.frogId.value as any as bigint;
 
         notification.info("Squeezing your Frog...");
+        const timestamp = Date.now();
         const signature = await signMessageAsync({
-          message: `I own ${frogName}`,
+          message: `You are signing that you own ${frogName} at timestamp ${timestamp} on https://frogcrypto-squeeze.com`,
         });
 
         // Send data to backend
@@ -200,6 +201,7 @@ const Home = () => {
               },
               signature,
               address: connectedAddress,
+              timestamp,
             },
             replacer,
           ),
