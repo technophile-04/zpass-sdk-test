@@ -10,6 +10,7 @@ import { PartialDeep } from "type-fest";
 import { useAccount, useSignMessage } from "wagmi";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
 import { replacer } from "~~/utils/scaffold-eth/common";
+import { TokensBalances } from "~~/components/TokensBalances";
 
 export interface PODData {
   entries: PODEntries;
@@ -246,6 +247,8 @@ const ZuAuth = () => {
             </div>
           </div>
         )}
+
+        <TokensBalances />
       </div>
     </main>
   );
