@@ -225,8 +225,9 @@ const Home = () => {
 
   if (!connectedAddress) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <main className="flex min-h-screen flex-col items-center gap-8 p-8">
         <RainbowKitCustomConnectButton />
+        <img src="/priest.jpg" width="550" />
       </main>
     );
   }
