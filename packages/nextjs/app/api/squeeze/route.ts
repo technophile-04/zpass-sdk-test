@@ -31,11 +31,11 @@ async function generateFrogStory(frogStats: FrogStats): Promise<string> {
 Create a short, mystical story (max 4 sentences) about a priest juicing this frog in a magical ritual. Use these attributes in creative ways:
 
 Name: ${frogStats.name}
-Beauty: ${frogStats.beauty}/10
-Intelligence: ${frogStats.intelligence}/10
-Jump: ${frogStats.jump}/10
-Speed: ${frogStats.speed}/10
-Rarity: ${frogStats.rarity}/10
+Beauty: ${frogStats.beauty}/15
+Intelligence: ${frogStats.intelligence}/15
+Jump: ${frogStats.jump}/15
+Speed: ${frogStats.speed}/15
+Rarity: ${frogStats.rarity}/6
 Biome: ${frogStats.biome}
 
 Description: ${frogStats.description}
@@ -77,7 +77,7 @@ type FrogStats = {
   frogId: string;
 };
 
-type MintRequestBody = {
+type SqueezeRequestBody = {
   proof: ProofData;
   frogStats: FrogStats;
   signature: string;
@@ -103,7 +103,7 @@ const convertFrogStatsToBigInt = (stats: Omit<FrogStats, "description">) => {
     intelligence: BigInt(stats.intelligence),
     jump: BigInt(stats.jump),
     speed: BigInt(stats.speed),
-    temprament: BigInt(stats.temperament),
+    temperament: BigInt(stats.temperament),
     rarity: BigInt(stats.rarity),
     owner: BigInt(stats.owner),
     name: stats.name, // Keep as string
@@ -122,7 +122,7 @@ const convertProofToBigInt = (proof: ProofData) => {
 
 export async function POST(req: Request) {
   try {
-    const body: MintRequestBody = await req.json();
+    const body: SqueezeRequestBody = await req.json();
 
     // Convert string values to BigInt
     const convertedProof = convertProofToBigInt(body.proof);
@@ -143,11 +143,11 @@ export async function POST(req: Request) {
 
     console.log("The description values are: ", description);
 
-    const { address: contractAddress, abi: contractAbi } = deployedContracts[mainNetwork.id].YourContract;
+    const { address: contractAddress, abi: contractAbi } = deployedContracts[mainNetwork.id].FrogCryptoSqueeze;
     const hash = await walletClient.writeContract({
       address: contractAddress,
       abi: contractAbi,
-      functionName: "mintFrog",
+      functionName: "squeezeFrog",
       args: [
         {
           _pA: convertedProof.pi_a as any,
@@ -163,9 +163,10 @@ export async function POST(req: Request) {
           speed: convertedFrogStats.speed,
           rarity: convertedFrogStats.rarity,
           owner: convertedFrogStats.owner,
-          temprament: convertedFrogStats.temprament,
+          temperament: convertedFrogStats.temperament,
           frogId: convertedFrogStats.frogId,
         },
+        body.address,
       ],
     });
 
@@ -177,7 +178,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: "NFT minted successfully",
+        message: "Frog squeezed successfully",
         txHash: hash,
         story,
       },

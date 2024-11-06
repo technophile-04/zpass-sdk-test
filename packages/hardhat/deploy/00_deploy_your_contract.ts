@@ -1,5 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { Contract } from "ethers";
+import tokens from "../../nextjs/tokens.config";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -27,13 +29,55 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  await deploy("YourContract", {
+  const tokensContracts = [];
+
+  for (const token of tokens) {
+    const contractName = `FrogCrypto${token.attribute}Token`;
+    await deploy(contractName, {
+      from: deployer,
+      args: [token.name, token.symbol],
+      log: true,
+      autoMine: true,
+      contract: "PotionToken",
+    });
+
+    tokensContracts.push(await hre.ethers.getContract<Contract>(contractName, deployer));
+
+    console.log(`💵 ${contractName} deployed`);
+  }
+
+  const tokensContractsAddresses = [];
+
+  for (const tokenContract of tokensContracts) {
+    tokensContractsAddresses.push(await tokenContract.getAddress());
+  };
+
+  // :: FrogCryptoSqueeze ::
+  const frogCryptoContract = await deploy("FrogCryptoSqueeze", {
     from: deployer,
+    args: tokensContractsAddresses,
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
+
+  console.log("🐸 FrogCryptoSqueeze deployed");
+
+  for (const tokenContract of tokensContracts) {
+    await tokenContract.grantMinterRole(frogCryptoContract.address);
+  }
+
+  console.log("🔑 Minter role granted to FrogCryptoSqueeze");
+
+  const tokensOwner = "";
+  if (tokensOwner) {
+    for (const tokenContract of tokensContracts) {
+      await tokenContract.transferOwnership(tokensOwner);
+    }
+
+    console.log("🔑 Tokens ownership transferred to", tokensOwner);
+  }
 };
 
 export default deployYourContract;
