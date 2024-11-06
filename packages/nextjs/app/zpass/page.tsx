@@ -58,6 +58,9 @@ const entriesToProve: ForgCryptToType = {
   description: {
     type: "string",
   },
+  temperament: {
+    type: "int",
+  },
 };
 
 // TODO: Remove console logs
@@ -124,13 +127,14 @@ const ZuAuth = () => {
                 beauty: true,
                 jump: true,
                 speed: true,
-                forgId: true,
+                frogId: true,
                 name: true,
                 biome: true,
                 owner: true,
                 intelligence: true,
                 rarity: true,
                 description: true,
+                temperament: true,
               },
             },
           },
@@ -139,11 +143,14 @@ const ZuAuth = () => {
 
       if (result.success) {
         const boundConfig = result.boundConfig;
+        console.log("The bound config is:", boundConfig);
         const revealedClaims = result.revealedClaims;
         const circuit = gpcPreVerify(boundConfig, revealedClaims);
         const pubSignals = ProtoPODGPC.makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
 
+        console.log("The pubSignals are:", pubSignals);
         const frogStats = revealedClaims.pods.FROGCRYPTO?.entries;
+        console.log("The frogStats are:", frogStats);
         const frogName = frogStats?.name.value;
 
         const beauty = frogStats?.beauty.value as any as bigint;
@@ -154,6 +161,8 @@ const ZuAuth = () => {
         const rarity = frogStats?.rarity.value as any as bigint;
         const owner = frogStats?.owner.value as any as bigint;
         const description = frogStats?.description.value as any as string;
+        const temperament = frogStats?.temperament.value as any as bigint;
+        const frogId = frogStats?.frogId.value as any as bigint;
 
         notification.info("Minting your Frog NFT...");
         const signature = await signMessageAsync({
@@ -184,6 +193,8 @@ const ZuAuth = () => {
                 owner: owner.toString(),
                 name: frogName,
                 description,
+                temperament: temperament.toString(),
+                frogId: frogId.toString(),
               },
               signature,
               address: connectedAddress,

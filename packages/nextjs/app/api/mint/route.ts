@@ -73,6 +73,8 @@ type FrogStats = {
   owner: string;
   name: string;
   description: string;
+  temperament: string;
+  frogId: string;
 };
 
 type MintRequestBody = {
@@ -97,9 +99,11 @@ const convertFrogStatsToBigInt = (stats: Omit<FrogStats, "description">) => {
   return {
     beauty: BigInt(stats.beauty),
     biome: BigInt(stats.biome),
+    frogId: BigInt(stats.frogId),
     intelligence: BigInt(stats.intelligence),
     jump: BigInt(stats.jump),
     speed: BigInt(stats.speed),
+    temprament: BigInt(stats.temperament),
     rarity: BigInt(stats.rarity),
     owner: BigInt(stats.owner),
     name: stats.name, // Keep as string
@@ -123,6 +127,7 @@ export async function POST(req: Request) {
     // Convert string values to BigInt
     const convertedProof = convertProofToBigInt(body.proof);
     const { description, ...actualStats } = body.frogStats;
+    console.log("The acutal values are:", actualStats);
     const convertedFrogStats = convertFrogStatsToBigInt(actualStats);
 
     // Verify signature
@@ -158,6 +163,8 @@ export async function POST(req: Request) {
           speed: convertedFrogStats.speed,
           rarity: convertedFrogStats.rarity,
           owner: convertedFrogStats.owner,
+          temprament: convertedFrogStats.temprament,
+          frogId: convertedFrogStats.frogId,
         },
       ],
     });

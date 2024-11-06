@@ -21,7 +21,7 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 		uint256[2] _pA;
 		uint256[2][2] _pB;
 		uint256[2] _pC;
-		uint256[56] _pubSignals;
+		uint256[60] _pubSignals;
 	}
 
 	struct FrogAttributes {
@@ -32,6 +32,8 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 		uint256 speed;
 		uint256 rarity;
 		uint256 owner;
+		uint256 temprament;
+		uint256 frogId;
 	}
 
 	event FrogMinted(uint256 tokenId, address owner, FrogAttributes attributes);
@@ -81,10 +83,10 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 		ProofArgs calldata proof,
 		FrogAttributes calldata attrs
 	) public view returns (bool) {
-		uint256[56] memory pubSignals = proof._pubSignals;
+		uint256[60] memory pubSignals = proof._pubSignals;
 
 		// Verify FrogCrypto signer
-		require(pubSignals[23] == FROGCRYPTO_SIGNER_HASH, "Invalid signer");
+		require(pubSignals[25] == FROGCRYPTO_SIGNER_HASH, "Invalid signer");
 
 		uint256[1] memory input;
 
@@ -96,28 +98,36 @@ contract YourContract is ERC721, Groth16Verifier, Poseidon {
 		input[0] = attrs.biome;
 		require(this.hash(input) == pubSignals[1], "Invalid biome value");
 
+		// verify frogId
+		input[0] = attrs.frogId;
+		require(this.hash(input) == pubSignals[3], "Invalid frogId value");
+
 		// Verify intelligence
 		input[0] = attrs.intelligence;
+		console.log(this.hash(input));
 		require(
-			this.hash(input) == pubSignals[3],
+			this.hash(input) == pubSignals[4],
 			"Invalid intelligence value"
 		);
 
 		// Verify jump
 		input[0] = attrs.jump;
-		require(this.hash(input) == pubSignals[4], "Invalid jump value");
+		require(this.hash(input) == pubSignals[5], "Invalid jump value");
 
 		// Verify owner
 		input[0] = attrs.owner;
-		require(this.hash(input) == pubSignals[6], "Invalid owner value");
+		require(this.hash(input) == pubSignals[7], "Invalid owner value");
 
 		// Verify rarity
 		input[0] = attrs.rarity;
-		require(this.hash(input) == pubSignals[7], "Invalid rarity value");
+		require(this.hash(input) == pubSignals[8], "Invalid rarity value");
 
 		// Verify speed
 		input[0] = attrs.speed;
-		require(this.hash(input) == pubSignals[8], "Invalid speed value");
+		require(this.hash(input) == pubSignals[9], "Invalid speed value");
+
+		input[0] = attrs.temprament;
+		require(this.hash(input) == pubSignals[10], "Invalid speed value");
 
 		return true;
 	}
