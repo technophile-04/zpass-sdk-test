@@ -1,6 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { Contract } from "ethers";
+import tokens from "../../nextjs/tokens.config";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -27,35 +28,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     log: true,
     autoMine: true,
   });
-
-  // TODO: move to scaffold.config
-  const tokens = [
-    {
-      attribute: "Rarity",
-      name: "Mystic Relic",
-      symbol: "🔮",
-    },
-    {
-      attribute: "Jump",
-      name: "Skybound Crest",
-      symbol: "🌌",
-    },
-    {
-      attribute: "Speed",
-      name: "Zephyr Token",
-      symbol: "🍃",
-    },
-    {
-      attribute: "Intelligence",
-      name: "Sage's Sigil",
-      symbol: "🧠",
-    },
-    {
-      attribute: "Beauty",
-      name: "Enchantress' Tear",
-      symbol: "🌺",
-    }
-  ];
 
   const tokensContracts = [];
 

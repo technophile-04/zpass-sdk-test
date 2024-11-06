@@ -1,4 +1,6 @@
 import * as chains from "viem/chains";
+import { TTokenInfo } from "./types/frog";
+import tokensConfig from "./tokens.config";
 
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
@@ -6,6 +8,7 @@ export type ScaffoldConfig = {
   alchemyApiKey: string;
   walletConnectProjectId: string;
   onlyLocalBurnerWallet: boolean;
+  tokens: readonly TTokenInfo[];
 };
 
 const scaffoldConfig = {
@@ -30,6 +33,9 @@ const scaffoldConfig = {
 
   // Only show the Burner Wallet when running on hardhat network
   onlyLocalBurnerWallet: true,
+
+  // Tokens get when squeezing a frog
+  tokens: tokensConfig,
 } as const satisfies ScaffoldConfig;
 
 export default scaffoldConfig;
