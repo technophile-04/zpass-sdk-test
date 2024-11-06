@@ -227,17 +227,19 @@ const Home = () => {
 
   if (!connectedAddress) {
     return (
-      <main className="flex min-h-screen flex-col items-center gap-8 p-8">
-        <RainbowKitCustomConnectButton />
-        <img src="/priest.jpg" width="550" />
+      <main className="flex min-h-screen flex-col items-center p-8">
+        <div className="z-10 max-w-5xl w-full flex flex-row gap-8 items-center justify-between">
+          <RainbowKitCustomConnectButton />
+          <img src="/priest.jpg" width="550" />
+        </div>
       </main>
     );
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-8">
-      <div className="z-10 max-w-5xl w-full flex flex-col gap-8 items-center justify-between">
-        <div className="flex space-x-2">
+      <div className="z-10 max-w-5xl w-full flex flex-row gap-8 items-center justify-between">
+        <div className="flex flex-col space-y-4">
           {!z && (
             <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
               {isLoading ? "Connecting..." : "Connect Zupass"}
@@ -245,30 +247,40 @@ const Home = () => {
           )}
           {z && (
             <button onClick={handleSqueeze} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Squeezing..." : "Squeeze Frog"}
+              {isLoading ? "Squeezing..." : (story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog")}
             </button>
+          )}
+          {story && squeezedFrogName && (
+            <>
+              <div className="card w-full bg-base-200 shadow-xl">
+                <div className="card-body">
+                  <h2 className="card-title text-2xl font-bold text-primary">The Tale of {squeezedFrogName}</h2>
+                  <div className="divider"></div>
+                  <p className="text-lg italic leading-relaxed">{story}</p>
+                </div>
+              </div>
+              <div className="card w-full bg-base-200 shadow-xl">
+                <div className="card-body">
+                  <h2 className="card-title text-2xl font-bold text-primary">Rewards</h2>
+                  <div className="divider"></div>
+                  <TokensBalances />
+                </div>
+              </div>
+            </>
           )}
         </div>
 
         {story && squeezedFrogName ? (
-          <>
-            <div className="card w-full bg-base-200 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title text-2xl font-bold text-primary">The Tale of {squeezedFrogName}</h2>
-                <div className="divider"></div>
-                <p className="text-lg italic leading-relaxed">{story}</p>
-              </div>
-            </div>
-            <div className="card w-full bg-base-200 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title text-2xl font-bold text-primary">Rewards</h2>
-                <div className="divider"></div>
-                <TokensBalances />
-              </div>
-            </div>
-          </>
-        ) : (
           <img src="/priest.jpg" width="550" />
+        ) : (
+          <>
+            {(!z || (z && !isLoading)) && (
+              <img src="/priest.jpg" width="550" />
+            )}
+            {z && isLoading && (
+              <img src="/priest-open.jpg" width="550" />
+            )}
+          </>
         )}
       </div>
     </main>
