@@ -271,7 +271,7 @@ const Home = () => {
         </div>
 
         {story && squeezedFrogName ? (
-          <img src="/priest.jpg" width="550" />
+          <img src="/priest-squeeze.jpg" width="550" />
         ) : (
           <>
             {(!z || (z && !isLoading)) && (
