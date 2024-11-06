@@ -50,7 +50,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   for (const tokenContract of tokensContracts) {
     tokensContractsAddresses.push(await tokenContract.getAddress());
-  };
+  }
 
   // :: FrogCryptoSqueeze ::
   const frogCryptoContract = await deploy("FrogCryptoSqueeze", {
