@@ -103,7 +103,7 @@ const convertFrogStatsToBigInt = (stats: Omit<FrogStats, "description">) => {
     intelligence: BigInt(stats.intelligence),
     jump: BigInt(stats.jump),
     speed: BigInt(stats.speed),
-    temprament: BigInt(stats.temperament),
+    temperament: BigInt(stats.temperament),
     rarity: BigInt(stats.rarity),
     owner: BigInt(stats.owner),
     name: stats.name, // Keep as string
@@ -163,7 +163,7 @@ export async function POST(req: Request) {
           speed: convertedFrogStats.speed,
           rarity: convertedFrogStats.rarity,
           owner: convertedFrogStats.owner,
-          temprament: convertedFrogStats.temprament,
+          temperament: convertedFrogStats.temperament,
           frogId: convertedFrogStats.frogId,
         },
         body.address,

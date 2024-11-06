@@ -38,7 +38,7 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         uint256 speed;
         uint256 rarity;
         uint256 owner;
-        uint256 temprament;
+        uint256 temperament;
         uint256 frogId;
     }
 
@@ -46,7 +46,6 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         uint256 indexed frogId,
         address indexed owner,
         uint256 rarityReward,
-        uint256 temperamentReward,
         uint256 jummpReward,
         uint256 speedReward,
         uint256 intelligenceReward,
@@ -60,14 +59,12 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
 
     constructor(
         address rarityTokenAddress,
-        address temperamentTokenAddress,
         address jumpTokenAddress,
         address speedTokenAddress,
         address intelligenceTokenAddress,
         address beautyTokenAddress
     ) {
         rarityTokenContract = PotionTokenContract(rarityTokenAddress);
-        temperamentTokenContract = PotionTokenContract(temperamentTokenAddress);
         jumpTokenContract = PotionTokenContract(jumpTokenAddress);
         speedTokenContract = PotionTokenContract(speedTokenAddress);
         intelligenceTokenContract = PotionTokenContract(intelligenceTokenAddress);
@@ -78,45 +75,48 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         // First verify the proof and attributes
         require(verifyFrogAttributes(proof, attributes), "Invalid frog attributes");
 
-        // TODO: change cooldown period and owner to frogId
+        // TODO: change cooldown period
         require(
-            squeezeTimestamps[attributes.owner] + 1 minutes < block.timestamp,
+            squeezeTimestamps[attributes.frogId] + 1 minutes < block.timestamp,
             "Squeeze: Cooldown period is not over yet"
         );
 
-        // TODO: change owner to frogId
-        squeezeTimestamps[attributes.owner] = block.timestamp;
+        squeezeTimestamps[attributes.frogId] = block.timestamp;
 
-        // TODO: change owner to frogId
         bytes32 predictableRandom = keccak256(
-            abi.encodePacked(attributes.owner, blockhash(block.number - 1), msg.sender, address(this))
+            abi.encodePacked(attributes.frogId, blockhash(block.number - 1), msg.sender, address(this))
         );
 
-        uint256 rarityAmount = ((uint256(uint8(predictableRandom[0])) % 10) + 1) * (attributes.rarity + 1);
-        // uint256 temperamentAmount = ((uint256(uint8(predictableRandom[1])) % 10) + 1) * (attributes.temperament + 1);
-        uint256 jumpAmount = ((uint256(uint8(predictableRandom[2])) % 10) + 1) * (attributes.jump + 1);
-        uint256 speedAmount = ((uint256(uint8(predictableRandom[3])) % 10) + 1) * (attributes.speed + 1);
-        uint256 intelligenceAmount = ((uint256(uint8(predictableRandom[4])) % 10) + 1) * (attributes.intelligence + 1);
-        uint256 beautyAmount = ((uint256(uint8(predictableRandom[5])) % 10) + 1) * (attributes.beauty + 1);
+        uint8 temperamentMultiplier = 1;
+
+        // cool temperament gets a bonus (we can add another bonus later)
+        if (attributes.temperament == 6) {
+            temperamentMultiplier = 2;
+        }
+
+        uint256 rarityAmount = ((uint256(uint8(predictableRandom[0])) % 10) + 1) *
+            (attributes.rarity + 1) *
+            temperamentMultiplier;
+        uint256 jumpAmount = ((uint256(uint8(predictableRandom[2])) % 10) + 1) *
+            (attributes.jump + 1) *
+            temperamentMultiplier;
+        uint256 speedAmount = ((uint256(uint8(predictableRandom[3])) % 10) + 1) *
+            (attributes.speed + 1) *
+            temperamentMultiplier;
+        uint256 intelligenceAmount = ((uint256(uint8(predictableRandom[4])) % 10) + 1) *
+            (attributes.intelligence + 1) *
+            temperamentMultiplier;
+        uint256 beautyAmount = ((uint256(uint8(predictableRandom[5])) % 10) + 1) *
+            (attributes.beauty + 1) *
+            temperamentMultiplier;
 
         rarityTokenContract.mint(owner, rarityAmount);
-        // temperamentTokenContract.mint(owner, temperamentAmount);
         jumpTokenContract.mint(owner, jumpAmount);
         speedTokenContract.mint(owner, speedAmount);
         intelligenceTokenContract.mint(owner, intelligenceAmount);
         beautyTokenContract.mint(owner, beautyAmount);
 
-        // TODO: change owner to frogId
-        emit Squeeze(
-            attributes.owner,
-            owner,
-            rarityAmount,
-            0,
-            jumpAmount,
-            speedAmount,
-            intelligenceAmount,
-            beautyAmount
-        );
+        emit Squeeze(attributes.frogId, owner, rarityAmount, jumpAmount, speedAmount, intelligenceAmount, beautyAmount);
     }
 
     function verifyFrogAttributes(ProofArgs calldata proof, FrogAttributes calldata attrs) public view returns (bool) {
@@ -159,7 +159,7 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         input[0] = attrs.speed;
         require(this.hash(input) == pubSignals[9], "Invalid speed value");
 
-        input[0] = attrs.temprament;
+        input[0] = attrs.temperament;
         require(this.hash(input) == pubSignals[10], "Invalid speed value");
 
         return true;

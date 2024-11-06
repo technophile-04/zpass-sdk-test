@@ -36,11 +36,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       symbol: "🔮",
     },
     {
-      attribute: "Temperament",
-      name: "Emberstone",
-      symbol: "🔥",
-    },
-    {
       attribute: "Jump",
       name: "Skybound Crest",
       symbol: "🌌",
