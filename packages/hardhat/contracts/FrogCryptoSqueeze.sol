@@ -49,7 +49,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         uint256 jumpReward,
         uint256 speedReward,
         uint256 intelligenceReward,
-        uint256 beautyReward
+        uint256 beautyReward,
+        string nameAndStory
     );
 
     modifier verifiedProof(ProofArgs calldata proof) {
@@ -71,7 +72,12 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         beautyTokenContract = PotionTokenContract(beautyTokenAddress);
     }
 
-    function squeezeFrog(ProofArgs calldata proof, FrogAttributes calldata attributes, address owner) public {
+    function squeezeFrog(
+        ProofArgs calldata proof,
+        FrogAttributes calldata attributes,
+        address owner,
+        string memory nameAndStory
+    ) public {
         // First verify the proof and attributes
         require(verifyFrogAttributes(proof, attributes), "Invalid frog attributes");
 
@@ -116,7 +122,16 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         intelligenceTokenContract.mint(owner, intelligenceAmount);
         beautyTokenContract.mint(owner, beautyAmount);
 
-        emit Squeeze(attributes.frogId, owner, rarityAmount, jumpAmount, speedAmount, intelligenceAmount, beautyAmount);
+        emit Squeeze(
+            attributes.frogId,
+            owner,
+            rarityAmount,
+            jumpAmount,
+            speedAmount,
+            intelligenceAmount,
+            beautyAmount,
+            nameAndStory
+        );
     }
 
     function verifyFrogAttributes(ProofArgs calldata proof, FrogAttributes calldata attrs) public view returns (bool) {
