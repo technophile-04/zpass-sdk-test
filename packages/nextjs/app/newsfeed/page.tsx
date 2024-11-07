@@ -57,6 +57,7 @@ const Newsfeed: NextPage = () => {
   const { data: squeezeLogsData } = useQuery({
     queryKey: ["squeezeLogs"],
     queryFn: fetchSqueezeLogs,
+    refetchInterval: 30000,
   });
 
   return (
