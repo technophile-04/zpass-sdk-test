@@ -1,11 +1,12 @@
 // app/api/mint/route.ts
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { createWalletClient, fallback, http, verifyMessage } from "viem";
+import { createPublicClient, createWalletClient, fallback, http, parseEventLogs, verifyMessage } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import deployedContracts from "~~/contracts/deployedContracts";
 import scaffoldConfig from "~~/scaffold.config";
 import { getAlchemyHttpUrl, getParsedError } from "~~/utils/scaffold-eth";
+import { SqueezeReward } from "~~/types/frog";
 
 const wallet_private_key = (process.env.WALLET_PRIVATE_KEY ||
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80") as `0x${string}`;
@@ -20,6 +21,11 @@ const walletClient = createWalletClient({
   chain: mainNetwork,
   transport: fallback(rpcFallbacks),
   account: privateKeyToAccount(wallet_private_key),
+});
+
+const publicClient = createPublicClient({
+  chain: mainNetwork,
+  transport: http(),
 });
 
 const openai = new OpenAI({
@@ -82,6 +88,7 @@ type SqueezeRequestBody = {
   frogStats: FrogStats;
   signature: string;
   address: string;
+  timestamp: number;
 };
 
 // Utility function to convert string arrays to BigInt arrays
@@ -130,9 +137,11 @@ export async function POST(req: Request) {
     console.log("The acutal values are:", actualStats);
     const convertedFrogStats = convertFrogStatsToBigInt(actualStats);
 
+    const message = `You are signing that you own ${body.frogStats.name} at timestamp ${body.timestamp} on https://frogcrypto-squeeze.com`
+
     // Verify signature
     const isValidSignature = await verifyMessage({
-      message: `I own ${body.frogStats.name}`,
+      message,
       signature: body.signature as `0x${string}`,
       address: body.address as `0x${string}`,
     });
@@ -175,12 +184,33 @@ export async function POST(req: Request) {
       description,
     });
 
+    const transaction = await publicClient.waitForTransactionReceipt(
+      { hash }
+    );
+    console.log("Transaction: ", transaction);
+
+    const logs = parseEventLogs({
+      abi: contractAbi,
+      logs: transaction.logs,
+    });
+
+    console.log("The logs are: ", logs);
+
+    const rewards: SqueezeReward = {
+      beauty: logs[0].args.beautyReward.toString(),
+      intelligence: logs[0].args.intelligenceReward.toString(),
+      jump: logs[0].args.jumpReward.toString(),
+      speed: logs[0].args.speedReward.toString(),
+      rarity: logs[0].args.rarityReward.toString(),
+    }
+
     return NextResponse.json(
       {
         success: true,
         message: "Frog squeezed successfully",
         txHash: hash,
         story,
+        rewards,
       },
       { status: 200 },
     );
