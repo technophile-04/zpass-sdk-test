@@ -152,6 +152,11 @@ export async function POST(req: Request) {
 
     console.log("The description values are: ", description);
 
+    const story = await generateFrogStory({
+      ...body.frogStats,
+      description,
+    });
+
     const { address: contractAddress, abi: contractAbi } = deployedContracts[mainNetwork.id].FrogCryptoSqueeze;
     const hash = await walletClient.writeContract({
       address: contractAddress,
@@ -176,12 +181,8 @@ export async function POST(req: Request) {
           frogId: convertedFrogStats.frogId,
         },
         body.address,
+        `${actualStats.name}|${story}`,
       ],
-    });
-
-    const story = await generateFrogStory({
-      ...body.frogStats,
-      description,
     });
 
     const transaction = await publicClient.waitForTransactionReceipt(
