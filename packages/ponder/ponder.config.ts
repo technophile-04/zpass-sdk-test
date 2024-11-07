@@ -19,7 +19,7 @@ const contracts = Object.fromEntries(contractNames.map((contractName) => {
     network: targetNetwork.name as string,
     abi: deployedContracts[targetNetwork.id][contractName].abi,
     address: deployedContracts[targetNetwork.id][contractName].address,
-    startBlock: deployedContracts[targetNetwork.id][contractName].startBlock || 19593040,
+    startBlock: deployedContracts[targetNetwork.id][contractName].startBlock || 19609015,
   }];
 }));
 

@@ -6129,7 +6129,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     FrogCryptoSqueeze: {
-      address: "0x28596C7884787D914b83d3B541e158bBB1A8B527",
+      address: "0xb877877768eB61398aceAa9F67Ed21E97ecd49d8",
       abi: [
         {
           inputs: [
@@ -6206,6 +6206,12 @@ const deployedContracts = {
               internalType: "uint256",
               name: "beautyReward",
               type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "nameAndStory",
+              type: "string",
             },
           ],
           name: "Squeeze",
@@ -6380,6 +6386,11 @@ const deployedContracts = {
               internalType: "address",
               name: "owner",
               type: "address",
+            },
+            {
+              internalType: "string",
+              name: "nameAndStory",
+              type: "string",
             },
           ],
           name: "squeezeFrog",
