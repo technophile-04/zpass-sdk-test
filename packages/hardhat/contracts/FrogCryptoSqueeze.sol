@@ -46,7 +46,7 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         uint256 indexed frogId,
         address indexed owner,
         uint256 rarityReward,
-        uint256 jummpReward,
+        uint256 jumpReward,
         uint256 speedReward,
         uint256 intelligenceReward,
         uint256 beautyReward

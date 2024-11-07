@@ -10,8 +10,9 @@ import { PartialDeep } from "type-fest";
 import { useAccount, useSignMessage } from "wagmi";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
 import { replacer } from "~~/utils/scaffold-eth/common";
-import { TokensBalances } from "~~/components/TokensBalances";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import { SqueezeReward } from "~~/types/frog";
+import { TokensRewards } from "~~/components/TokensRewards";
 
 export interface PODData {
   entries: PODEntries;
@@ -81,6 +82,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [story, setStory] = useState<string | null>(null);
   const [squeezedFrogName, setSqueezedFrogName] = useState<string | null>(null);
+  const [squeezeReward, setSqueezeReward] = useState<SqueezeReward | null>(null);
 
   const { signMessageAsync } = useSignMessage();
 
@@ -215,6 +217,7 @@ const Home = () => {
         console.log("The data is", data);
         setStory(data.story);
         setSqueezedFrogName(frogName as string);
+        setSqueezeReward(data.rewards);
         notification.success(`Successfully squeezed Frog: ${frogName}`);
       }
     } catch (e) {
@@ -250,7 +253,7 @@ const Home = () => {
               {isLoading ? "Squeezing..." : (story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog")}
             </button>
           )}
-          {story && squeezedFrogName && (
+          {story && squeezedFrogName && squeezeReward && (
             <>
               <div className="card w-full bg-base-200 shadow-xl">
                 <div className="card-body">
@@ -263,14 +266,14 @@ const Home = () => {
                 <div className="card-body">
                   <h2 className="card-title text-2xl font-bold text-primary">Rewards</h2>
                   <div className="divider"></div>
-                  <TokensBalances />
+                  <TokensRewards rewards={squeezeReward} />
                 </div>
               </div>
             </>
           )}
         </div>
 
-        {story && squeezedFrogName ? (
+        {story && squeezedFrogName && squeezeReward ? (
           <img src="/priest-squeeze.jpg" width="550" />
         ) : (
           <>
