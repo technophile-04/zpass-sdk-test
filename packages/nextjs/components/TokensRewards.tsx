@@ -1,6 +1,5 @@
-import React from "react";
 import scaffoldConfig from "~~/scaffold.config";
-import { SqueezeReward } from "~~/types/frog";
+import { SqueezeReward, SqueezeRewardKey } from "~~/types/frog";
 
 export const TokensRewards = ({ rewards }: { rewards: SqueezeReward }) => {
   return (
@@ -13,12 +12,17 @@ export const TokensRewards = ({ rewards }: { rewards: SqueezeReward }) => {
           </tr>
         </thead>
         <tbody>
-          {scaffoldConfig.tokens.map(token => (
-            <tr>
-              <td>{token.symbol} {token.name}</td>
-              <td className="text-right">{rewards[token.attribute.toLowerCase()]}</td>
-            </tr>
-          ))}
+          {scaffoldConfig.tokens.map(token => {
+            const attribute = token.attribute.toLowerCase() as SqueezeRewardKey;
+            return (
+              <tr key={token.name}>
+                <td>
+                  {token.symbol} {token.name}
+                </td>
+                <td className="text-right">{rewards[attribute]}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
