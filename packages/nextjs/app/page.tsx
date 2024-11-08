@@ -77,7 +77,7 @@ const myZapp: Zapp = {
 };
 
 const Home = () => {
-  const { address: connectedAddress } = useAccount();
+  const { address: connectedAddress, isConnected } = useAccount();
   const [z, setZ] = useState<ParcnetAPI | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [story, setStory] = useState<string | null>(null);
@@ -228,15 +228,7 @@ const Home = () => {
     }
   };
 
-  let backgroundImageUrl = "/priest.jpg";
-  if (story && squeezedFrogName && squeezeReward) {
-    backgroundImageUrl = "/priest-squeeze.jpg";
-  }
-  if (z && isLoading) {
-    backgroundImageUrl = "/priest-open.jpg";
-  }
-
-  if (!connectedAddress) {
+  if (!isConnected) {
     return (
       <main>
         <div
@@ -251,6 +243,24 @@ const Home = () => {
         </div>
       </main>
     );
+  }
+
+  let backgroundImageUrl = "/priest.jpg";
+
+  if (isConnected && !z) {
+    backgroundImageUrl = "/priest-open.jpg";
+  }
+
+  if (isConnected && z) {
+    backgroundImageUrl = "/priest-open-frog-open.jpg";
+  }
+
+  if (isConnected && z && isLoading) {
+    backgroundImageUrl = "/priest-squeeze.jpg";
+  }
+
+  if (isConnected && story && squeezedFrogName && squeezeReward) {
+    backgroundImageUrl = "/priest-squeeze.jpg";
   }
 
   return (
