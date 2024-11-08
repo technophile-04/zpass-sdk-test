@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { gql, request } from "graphql-request";
 import type { NextPage } from "next";
-import { formatEther } from "viem";
 import { Address } from "~~/components/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 
@@ -61,9 +59,9 @@ const Newsfeed: NextPage = () => {
   });
 
   return (
-    <>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <h2 className="text-center text-4xl font-bold">Squeezing Rituals</h2>
+    <main className="min-h-screen bg-gray-200">
+      <div className="flex items-center flex-col flex-grow py-10 px-6">
+        <h2 className="text-center text-4xl font-lindenHill tracking-wide">Squeezing Rituals</h2>
         {!squeezeLogsData && (
           <div className="flex items-center flex-col flex-grow pt-12">
             <div className="loading loading-dots loading-md"></div>
@@ -71,9 +69,7 @@ const Newsfeed: NextPage = () => {
         )}
         {squeezeLogsData && !squeezeLogsData.squeezeLogs.items.length && (
           <div className="flex items-center flex-col flex-grow pt-4">
-            <p className="text-center text-xl font-bold">
-              No greetings found
-            </p>
+            <p className="text-center text-xl font-bold">No greetings found</p>
           </div>
         )}
         {squeezeLogsData && squeezeLogsData.squeezeLogs.items.length && (
@@ -85,16 +81,12 @@ const Newsfeed: NextPage = () => {
                   <p className="m-0 px-2">from</p>
                   <Address address={log.ownerId} />
                   <p className="m-0 px-2">at</p>
-                  <p className="my-2 font-medium">
-                    {new Date(log.timestamp * 1000).toLocaleString()}
-                  </p>
+                  <p className="my-2 font-medium">{new Date(log.timestamp * 1000).toLocaleString()}</p>
                 </div>
-                <div>
-                  {log.story}
-                </div>
+                <div>{log.story}</div>
                 <div>
                   Rewards:
-                  {scaffoldConfig.tokens.map((token) => (
+                  {scaffoldConfig.tokens.map(token => (
                     <span key={token.attribute} className="ml-2">
                       {log[`${token.attribute.toLowerCase()}Amount` as keyof SqueezeLog]} {token.symbol}
                     </span>
@@ -105,7 +97,7 @@ const Newsfeed: NextPage = () => {
           </div>
         )}
       </div>
-    </>
+    </main>
   );
 };
 
