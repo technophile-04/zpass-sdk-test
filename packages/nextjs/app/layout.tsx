@@ -18,7 +18,7 @@ const lindenHill = Linden_Hill({
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning className={lindenHill.variable}>
-      <body className="bg-gray-200">
+      <body className="bg-gray-800">
         <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
         <div id="zpass-app-connector">{/* This element will be used by the app connector */}</div>
       </body>

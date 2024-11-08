@@ -275,7 +275,7 @@ const Home = () => {
         <div className={clsx("flex flex-col", !z && "gap-44 pt-96")}>
           {!z && (
             <>
-              <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
+              <button onClick={handleAuth} className="btn btn-neutral" disabled={isLoading}>
                 {!isLoading && "Connect Zupass"}
                 {isLoading && (
                   <>
@@ -287,7 +287,7 @@ const Home = () => {
             </>
           )}
           {z && (
-            <button onClick={handleSqueeze} className="btn btn-primary" disabled={isLoading}>
+            <button onClick={handleSqueeze} className="btn btn-neutral" disabled={isLoading}>
               {isLoading && (
                 <>
                   <span className="loading loading-spinner"></span> Squeezing...
