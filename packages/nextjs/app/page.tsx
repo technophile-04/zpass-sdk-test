@@ -309,7 +309,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
-                <div className="p-3">
+                <div className="p-2">
                   <TokensRewards rewards={squeezeReward} />
                 </div>
               </div>
