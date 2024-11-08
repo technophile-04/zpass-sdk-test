@@ -60,7 +60,7 @@ const Newsfeed: NextPage = () => {
 
   return (
     <main className="min-h-screen bg-gray-200">
-      <div className="flex items-center flex-col flex-grow py-10 px-6">
+      <div className="py-10 px-6">
         <h2 className="text-center text-4xl font-lindenHill tracking-wide">Squeezing Rituals</h2>
         {!squeezeLogsData && (
           <div className="flex items-center flex-col flex-grow pt-12">
@@ -69,7 +69,7 @@ const Newsfeed: NextPage = () => {
         )}
         {squeezeLogsData && !squeezeLogsData.squeezeLogs.items.length && (
           <div className="flex items-center flex-col flex-grow pt-4">
-            <p className="text-center text-xl font-bold">No greetings found</p>
+            <p className="text-center text-xl tracking-wide">No Rituals Found</p>
           </div>
         )}
         {squeezeLogsData && squeezeLogsData.squeezeLogs.items.length && (
