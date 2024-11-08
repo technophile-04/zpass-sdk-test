@@ -6,6 +6,7 @@ import { ParcnetAPI, Zapp, connect } from "@parcnet-js/app-connector";
 import { gpcPreVerify } from "@pcd/gpc";
 import { ProtoPODGPC } from "@pcd/gpcircuits";
 import { POD, PODEntries } from "@pcd/pod";
+import clsx from "clsx";
 import { PartialDeep } from "type-fest";
 import { useAccount, useSignMessage } from "wagmi";
 import { TokensRewards } from "~~/components/TokensRewards";
@@ -271,18 +272,31 @@ const Home = () => {
           backgroundImage: `url('${backgroundImageUrl}')`,
         }}
       >
-        <div className="flex flex-col gap-44 pt-96">
+        <div className={clsx("flex flex-col", !z && "gap-44 pt-96")}>
           {!z && (
-            <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Connecting..." : "Connect Zupass"}
-            </button>
+            <>
+              <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
+                {!isLoading && "Connect Zupass"}
+                {isLoading && (
+                  <>
+                    <span className="loading loading-spinner"></span> Connecting...
+                  </>
+                )}
+              </button>
+              <RainbowKitCustomConnectButton />
+            </>
           )}
           {z && (
             <button onClick={handleSqueeze} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Squeezing..." : story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog"}
+              {isLoading && (
+                <>
+                  <span className="loading loading-spinner"></span> Squeezing...
+                </>
+              )}
+              {!isLoading && !story && !squeezedFrogName && "Squeeze Frog"}
+              {!isLoading && story && squeezedFrogName && "Squeeze Another Frog"}
             </button>
           )}
-          <RainbowKitCustomConnectButton />
         </div>
         <div>
           {story && squeezedFrogName && squeezeReward && (

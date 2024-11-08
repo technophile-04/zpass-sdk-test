@@ -24,9 +24,14 @@ p {
 }
 
 .btn {
-  @apply shadow-md;
+  @apply rounded-lg;
 }
 
 .btn.btn-ghost {
   @apply shadow-none;
+}
+
+.btn[disabled], .btn:disabled {
+  --tw-text-opacity: 1;
+  @apply text-gray-200 border-gray-300;
 }
