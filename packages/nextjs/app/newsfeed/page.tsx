@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { gql, request } from "graphql-request";
 import type { NextPage } from "next";
-import { formatEther } from "viem";
 import { Address } from "~~/components/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 
@@ -61,9 +59,9 @@ const Newsfeed: NextPage = () => {
   });
 
   return (
-    <>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <h2 className="text-center text-4xl font-bold">Squeezing Rituals</h2>
+    <main className="min-h-screen bg-gray-200">
+      <div className="py-10 px-6">
+        <h2 className="text-center text-4xl font-lindenHill tracking-wide">Squeezing Rituals</h2>
         {!squeezeLogsData && (
           <div className="flex items-center flex-col flex-grow pt-12">
             <div className="loading loading-dots loading-md"></div>
@@ -71,41 +69,39 @@ const Newsfeed: NextPage = () => {
         )}
         {squeezeLogsData && !squeezeLogsData.squeezeLogs.items.length && (
           <div className="flex items-center flex-col flex-grow pt-4">
-            <p className="text-center text-xl font-bold">
-              No greetings found
-            </p>
+            <p className="text-center text-xl tracking-wide">No Rituals Found</p>
           </div>
         )}
         {squeezeLogsData && squeezeLogsData.squeezeLogs.items.length && (
-          <div className="flex flex-col items-center space-y-8">
+          <div className="space-y-8 divide-y divide-gray-300">
             {squeezeLogsData.squeezeLogs.items.map((log: SqueezeLog) => (
-              <div key={log.id} className="flex flex-col items-center space-y-4">
-                <div className="flex flex-row items-center">
-                  <p className="my-2 font-medium">{log.name}</p>
-                  <p className="m-0 px-2">from</p>
-                  <Address address={log.ownerId} />
-                  <p className="m-0 px-2">at</p>
-                  <p className="my-2 font-medium">
+              <article key={log.id} className="pt-8 flex max-w-xl flex-col items-start justify-between">
+                <div className="flex items-center gap-x-4 text-xs">
+                  <time dateTime={new Date(log.timestamp * 1000).toLocaleString()} className="text-gray-500">
                     {new Date(log.timestamp * 1000).toLocaleString()}
-                  </p>
+                  </time>
                 </div>
-                <div>
-                  {log.story}
+                <div className="group relative">
+                  <div className="mt-3 flex justify-between">
+                    <h3 className="m-0 text-lg/6 font-semibold text-gray-900">{log.name}</h3>
+                    <Address address={log.ownerId} size="sm" />
+                  </div>
+                  <p className="mt-4 line-clamp-3 text-sm/6 text-gray-600">{log.story}</p>
                 </div>
-                <div>
+                <div className="text-gray-600 text-sm/6">
                   Rewards:
-                  {scaffoldConfig.tokens.map((token) => (
-                    <span key={token.attribute} className="ml-2">
+                  {scaffoldConfig.tokens.map(token => (
+                    <span key={token.attribute} className="ml-5 inline-block">
                       {log[`${token.attribute.toLowerCase()}Amount` as keyof SqueezeLog]} {token.symbol}
                     </span>
                   ))}
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         )}
       </div>
-    </>
+    </main>
   );
 };
 
