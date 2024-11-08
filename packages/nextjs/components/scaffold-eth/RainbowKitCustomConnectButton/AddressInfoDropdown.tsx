@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { getAddress } from "viem";
-import { Address } from "viem";
+import { Address, getAddress } from "viem";
 import { useDisconnect } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
@@ -47,7 +46,7 @@ export const AddressInfoDropdown = ({
 
   return (
     <>
-      <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
+      <details ref={dropdownRef} className="dropdown dropdown-top leading-3">
         <summary tabIndex={0} className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto">
           <BlockieAvatar address={checkSumAddress} size={30} ensImage={ensAvatar} />
           <span className="ml-2 mr-1">
