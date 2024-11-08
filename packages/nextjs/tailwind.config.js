@@ -13,7 +13,7 @@ module.exports = {
           "secondary-content": "#212638",
           accent: "#93BBFB",
           "accent-content": "#212638",
-          neutral: "#212638",
+          neutral: "#19362D",
           "neutral-content": "#ffffff",
           "base-100": "#ffffff",
           "base-200": "#f4f8ff",
@@ -46,6 +46,9 @@ module.exports = {
       },
       animation: {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      },
+      fontFamily: {
+        lindenHill: ["var(--font-linden-hill)"],
       },
     },
   },

@@ -4,10 +4,10 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, BanknotesIcon } from "@heroicons/react/24/outline";
+import { useAccount } from "wagmi";
+import { BanknotesIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
-import { useAccount } from "wagmi";
 
 type HeaderMenuLink = {
   label: string;
@@ -30,23 +30,24 @@ export const HeaderMenuLinks = () => {
 
   return (
     <>
-      {connectedAddress && menuLinks.map(({ label, href, icon }) => {
-        const isActive = pathname === href;
-        return (
-          <li key={href}>
-            <Link
-              href={href}
-              passHref
-              className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
-            >
-              {icon}
-              <span>{label}</span>
-            </Link>
-          </li>
-        );
-      })}
+      {connectedAddress &&
+        menuLinks.map(({ label, href, icon }) => {
+          const isActive = pathname === href;
+          return (
+            <li key={href}>
+              <Link
+                href={href}
+                passHref
+                className={`${
+                  isActive ? "bg-secondary shadow-md" : ""
+                } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+              >
+                {icon}
+                <span>{label}</span>
+              </Link>
+            </li>
+          );
+        })}
     </>
   );
 };

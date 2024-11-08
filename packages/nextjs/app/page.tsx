@@ -6,13 +6,14 @@ import { ParcnetAPI, Zapp, connect } from "@parcnet-js/app-connector";
 import { gpcPreVerify } from "@pcd/gpc";
 import { ProtoPODGPC } from "@pcd/gpcircuits";
 import { POD, PODEntries } from "@pcd/pod";
+import clsx from "clsx";
 import { PartialDeep } from "type-fest";
 import { useAccount, useSignMessage } from "wagmi";
-import { getParsedError, notification } from "~~/utils/scaffold-eth";
-import { replacer } from "~~/utils/scaffold-eth/common";
+import { TokensRewards } from "~~/components/TokensRewards";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { SqueezeReward } from "~~/types/frog";
-import { TokensRewards } from "~~/components/TokensRewards";
+import { getParsedError, notification } from "~~/utils/scaffold-eth";
+import { replacer } from "~~/utils/scaffold-eth/common";
 
 export interface PODData {
   entries: PODEntries;
@@ -77,7 +78,7 @@ const myZapp: Zapp = {
 };
 
 const Home = () => {
-  const { address: connectedAddress } = useAccount();
+  const { address: connectedAddress, isConnected } = useAccount();
   const [z, setZ] = useState<ParcnetAPI | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [story, setStory] = useState<string | null>(null);
@@ -228,63 +229,94 @@ const Home = () => {
     }
   };
 
-  if (!connectedAddress) {
+  if (!isConnected) {
     return (
-      <main className="flex min-h-screen flex-col items-center p-8">
-        <div className="z-10 max-w-5xl w-full flex flex-row gap-8 items-center justify-between">
-          <RainbowKitCustomConnectButton />
-          <img src="/priest.jpg" width="550" />
+      <main>
+        <div
+          className="flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/priest.jpg')`,
+          }}
+        >
+          <div className="z-10 place-content-center place-items-center">
+            <RainbowKitCustomConnectButton />
+          </div>
         </div>
       </main>
     );
   }
 
+  let backgroundImageUrl = "/priest.jpg";
+
+  if (isConnected && !z) {
+    backgroundImageUrl = "/priest-open.jpg";
+  }
+
+  if (isConnected && z) {
+    backgroundImageUrl = "/priest-open-frog-open.jpg";
+  }
+
+  if (isConnected && z && isLoading) {
+    backgroundImageUrl = "/priest-squeeze.jpg";
+  }
+
+  if (isConnected && story && squeezedFrogName && squeezeReward) {
+    backgroundImageUrl = "/priest-squeeze.jpg";
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
-      <div className="z-10 max-w-5xl w-full flex flex-row gap-8 items-center justify-between">
-        <div className="flex flex-col space-y-4">
+    <main>
+      <div
+        className="relative flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('${backgroundImageUrl}')`,
+        }}
+      >
+        <div className={clsx("flex flex-col", !z && "gap-44 pt-96")}>
           {!z && (
-            <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Connecting..." : "Connect Zupass"}
-            </button>
+            <>
+              <button onClick={handleAuth} className="btn btn-neutral" disabled={isLoading}>
+                {!isLoading && "Connect Zupass"}
+                {isLoading && (
+                  <>
+                    <span className="loading loading-spinner"></span> Connecting...
+                  </>
+                )}
+              </button>
+              <RainbowKitCustomConnectButton />
+            </>
           )}
           {z && (
-            <button onClick={handleSqueeze} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Squeezing..." : (story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog")}
+            <button onClick={handleSqueeze} className="btn btn-neutral" disabled={isLoading}>
+              {isLoading && (
+                <>
+                  <span className="loading loading-spinner"></span> Squeezing...
+                </>
+              )}
+              {!isLoading && !story && !squeezedFrogName && "Squeeze Frog"}
+              {!isLoading && story && squeezedFrogName && "Squeeze Another Frog"}
             </button>
           )}
+        </div>
+        <div>
           {story && squeezedFrogName && squeezeReward && (
             <>
-              <div className="card w-full bg-base-200 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title text-2xl font-bold text-primary">The Tale of {squeezedFrogName}</h2>
-                  <div className="divider"></div>
-                  <p className="text-lg italic leading-relaxed">{story}</p>
+              <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
+                <div className="card-body p-6">
+                  <h2 className="card-title m-0 text-xl font-lindenHill tracking-wide text-gray-800">
+                    The Tale of {squeezedFrogName}
+                  </h2>
+                  <p className="m-0 text-sm italic leading-relaxed">&quot;{story}&quot;</p>
                 </div>
               </div>
-              <div className="card w-full bg-base-200 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title text-2xl font-bold text-primary">Rewards</h2>
-                  <div className="divider"></div>
+              <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
+                <div className="p-4">
                   <TokensRewards rewards={squeezeReward} />
                 </div>
               </div>
             </>
           )}
         </div>
-
-        {story && squeezedFrogName && squeezeReward ? (
-          <img src="/priest-squeeze.jpg" width="550" />
-        ) : (
-          <>
-            {(!z || (z && !isLoading)) && (
-              <img src="/priest.jpg" width="550" />
-            )}
-            {z && isLoading && (
-              <img src="/priest-open.jpg" width="550" />
-            )}
-          </>
-        )}
       </div>
     </main>
   );

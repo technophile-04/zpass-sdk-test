@@ -10,4 +10,6 @@ export type SqueezeReward = {
   jump: string;
   speed: string;
   rarity: string;
-}
+};
+
+export type SqueezeRewardKey = keyof SqueezeReward;
