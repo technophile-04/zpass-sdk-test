@@ -256,7 +256,7 @@ const Home = () => {
   return (
     <main>
       <div
-        className="flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
+        className="relative flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('${backgroundImageUrl}')`,
         }}
@@ -277,16 +277,14 @@ const Home = () => {
         <div>
           {story && squeezedFrogName && squeezeReward && (
             <>
-              <div className="card w-full bg-base-200 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title text-lg font-bold text-primary">The Tale of {squeezedFrogName}</h2>
-                  <p className="italic leading-relaxed">{story}</p>
+              <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
+                <div className="card-body p-6">
+                  <h2 className="card-title text-lg font-bold text-gray-800">The Tale of {squeezedFrogName}</h2>
+                  <p className="m-0 italic font-semibold leading-relaxed">{story}</p>
                 </div>
               </div>
-              <div className="card w-full bg-base-200 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title text-2xl font-bold text-primary">Rewards</h2>
-                  <div className="divider"></div>
+              <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
+                <div className="p-4">
                   <TokensRewards rewards={squeezeReward} />
                 </div>
               </div>

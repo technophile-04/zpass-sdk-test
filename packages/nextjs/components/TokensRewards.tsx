@@ -3,12 +3,12 @@ import { SqueezeReward, SqueezeRewardKey } from "~~/types/frog";
 
 export const TokensRewards = ({ rewards }: { rewards: SqueezeReward }) => {
   return (
-    <div className="rounded-xl">
-      <table className="table-auto border-separate ">
+    <div className="overflow-x-auto">
+      <table className="table">
         <thead>
           <tr>
             <th>Token</th>
-            <th>Reward</th>
+            <th className="text-right">Reward</th>
           </tr>
         </thead>
         <tbody>
