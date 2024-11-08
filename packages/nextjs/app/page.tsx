@@ -261,7 +261,7 @@ const Home = () => {
           backgroundImage: `url('${backgroundImageUrl}')`,
         }}
       >
-        <div>
+        <div className="flex flex-col gap-44 pt-96">
           {!z && (
             <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
               {isLoading ? "Connecting..." : "Connect Zupass"}
@@ -272,13 +272,15 @@ const Home = () => {
               {isLoading ? "Squeezing..." : story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog"}
             </button>
           )}
+          <RainbowKitCustomConnectButton />
+        </div>
+        <div>
           {story && squeezedFrogName && squeezeReward && (
             <>
               <div className="card w-full bg-base-200 shadow-xl">
                 <div className="card-body">
-                  <h2 className="card-title text-2xl font-bold text-primary">The Tale of {squeezedFrogName}</h2>
-                  <div className="divider"></div>
-                  <p className="text-lg italic leading-relaxed">{story}</p>
+                  <h2 className="card-title text-lg font-bold text-primary">The Tale of {squeezedFrogName}</h2>
+                  <p className="italic leading-relaxed">{story}</p>
                 </div>
               </div>
               <div className="card w-full bg-base-200 shadow-xl">
