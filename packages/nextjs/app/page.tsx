@@ -8,11 +8,11 @@ import { ProtoPODGPC } from "@pcd/gpcircuits";
 import { POD, PODEntries } from "@pcd/pod";
 import { PartialDeep } from "type-fest";
 import { useAccount, useSignMessage } from "wagmi";
-import { getParsedError, notification } from "~~/utils/scaffold-eth";
-import { replacer } from "~~/utils/scaffold-eth/common";
+import { TokensRewards } from "~~/components/TokensRewards";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { SqueezeReward } from "~~/types/frog";
-import { TokensRewards } from "~~/components/TokensRewards";
+import { getParsedError, notification } from "~~/utils/scaffold-eth";
+import { replacer } from "~~/utils/scaffold-eth/common";
 
 export interface PODData {
   entries: PODEntries;
@@ -228,21 +228,40 @@ const Home = () => {
     }
   };
 
+  let backgroundImageUrl = "/priest.jpg";
+  if (story && squeezedFrogName && squeezeReward) {
+    backgroundImageUrl = "/priest-squeeze.jpg";
+  }
+  if (z && isLoading) {
+    backgroundImageUrl = "/priest-open.jpg";
+  }
+
   if (!connectedAddress) {
     return (
-      <main className="flex min-h-screen flex-col items-center p-8">
-        <div className="z-10 max-w-5xl w-full flex flex-row gap-8 items-center justify-between">
-          <RainbowKitCustomConnectButton />
-          <img src="/priest.jpg" width="550" />
+      <main>
+        <div
+          className="flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/priest.jpg')`,
+          }}
+        >
+          <div className="z-10 place-content-center place-items-center">
+            <RainbowKitCustomConnectButton />
+          </div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
-      <div className="z-10 max-w-5xl w-full flex flex-row gap-8 items-center justify-between">
-        <div className="flex flex-col space-y-4">
+    <main>
+      <div
+        className="flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('${backgroundImageUrl}')`,
+        }}
+      >
+        <div>
           {!z && (
             <button onClick={handleAuth} className="btn btn-primary" disabled={isLoading}>
               {isLoading ? "Connecting..." : "Connect Zupass"}
@@ -250,7 +269,7 @@ const Home = () => {
           )}
           {z && (
             <button onClick={handleSqueeze} className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? "Squeezing..." : (story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog")}
+              {isLoading ? "Squeezing..." : story && squeezedFrogName ? "Squeeze Another Frog" : "Squeeze Frog"}
             </button>
           )}
           {story && squeezedFrogName && squeezeReward && (
@@ -272,19 +291,6 @@ const Home = () => {
             </>
           )}
         </div>
-
-        {story && squeezedFrogName && squeezeReward ? (
-          <img src="/priest-squeeze.jpg" width="550" />
-        ) : (
-          <>
-            {(!z || (z && !isLoading)) && (
-              <img src="/priest.jpg" width="550" />
-            )}
-            {z && isLoading && (
-              <img src="/priest-open.jpg" width="550" />
-            )}
-          </>
-        )}
       </div>
     </main>
   );

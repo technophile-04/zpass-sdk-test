@@ -11,7 +11,7 @@ export const metadata = getMetadata({
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
-      <body>
+      <body className="bg-gray-200">
         <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
         <div id="zpass-app-connector">{/* This element will be used by the app connector */}</div>
       </body>
