@@ -303,8 +303,10 @@ const Home = () => {
             <>
               <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
                 <div className="card-body p-6">
-                  <h2 className="card-title text-lg font-bold text-gray-800">The Tale of {squeezedFrogName}</h2>
-                  <p className="m-0 italic leading-relaxed">{story}</p>
+                  <h2 className="card-title m-0 text-xl font-lindenHill tracking-wide text-gray-800">
+                    The Tale of {squeezedFrogName}
+                  </h2>
+                  <p className="m-0 text-sm italic leading-relaxed">&quot;{story}&quot;</p>
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">

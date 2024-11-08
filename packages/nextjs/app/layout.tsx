@@ -1,3 +1,4 @@
+import { Linden_Hill } from "next/font/google";
 import "@rainbow-me/rainbowkit/styles.css";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import "~~/styles/globals.css";
@@ -8,9 +9,15 @@ export const metadata = getMetadata({
   description: "Built with 🏗 Scaffold-ETH 2",
 });
 
+const lindenHill = Linden_Hill({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-linden-hill",
+});
+
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning className={lindenHill.variable}>
       <body className="bg-gray-200">
         <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
         <div id="zpass-app-connector">{/* This element will be used by the app connector */}</div>

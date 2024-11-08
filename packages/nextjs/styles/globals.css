@@ -24,7 +24,7 @@ p {
 }
 
 .btn {
-  @apply rounded-lg;
+  @apply rounded-lg font-lindenHill text-xl tracking-wide;
 }
 
 .btn.btn-ghost {
