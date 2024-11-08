@@ -35,3 +35,7 @@ p {
   --tw-text-opacity: 1;
   @apply text-gray-200 border-gray-300;
 }
+
+.table :where(th, td) {
+  @apply pt-2 pb-2;
+}

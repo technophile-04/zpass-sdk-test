@@ -9,6 +9,7 @@ import { POD, PODEntries } from "@pcd/pod";
 import clsx from "clsx";
 import { PartialDeep } from "type-fest";
 import { useAccount, useSignMessage } from "wagmi";
+import { ConnectButtonLayout } from "~~/components/ConnectButtonLayout";
 import { TokensRewards } from "~~/components/TokensRewards";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { SqueezeReward } from "~~/types/frog";
@@ -230,20 +231,7 @@ const Home = () => {
   };
 
   if (!isConnected) {
-    return (
-      <main>
-        <div
-          className="flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/priest.jpg')`,
-          }}
-        >
-          <div className="z-10 place-content-center place-items-center">
-            <RainbowKitCustomConnectButton />
-          </div>
-        </div>
-      </main>
-    );
+    return <ConnectButtonLayout />;
   }
 
   let backgroundImageUrl = "/priest.jpg";
@@ -272,7 +260,11 @@ const Home = () => {
           backgroundImage: `url('${backgroundImageUrl}')`,
         }}
       >
-        <div className={clsx("flex flex-col", !z && "gap-44 pt-96")}>
+        <div
+          className={clsx("flex flex-col", {
+            "gap-4 mt-[32rem]": !z,
+          })}
+        >
           {!z && (
             <>
               <button onClick={handleAuth} className="btn btn-neutral" disabled={isLoading}>
@@ -287,7 +279,14 @@ const Home = () => {
             </>
           )}
           {z && (
-            <button onClick={handleSqueeze} className="btn btn-neutral" disabled={isLoading}>
+            <button
+              onClick={handleSqueeze}
+              className={clsx("btn btn-neutral", {
+                "mt-[28rem]": !isLoading && !story && !squeezedFrogName,
+                "mt-[12rem]": isLoading,
+              })}
+              disabled={isLoading}
+            >
               {isLoading && (
                 <>
                   <span className="loading loading-spinner"></span> Squeezing...
@@ -310,7 +309,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
-                <div className="p-4">
+                <div className="p-2">
                   <TokensRewards rewards={squeezeReward} />
                 </div>
               </div>
