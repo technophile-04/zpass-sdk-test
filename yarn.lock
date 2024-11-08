@@ -3062,6 +3062,7 @@ __metadata:
     graphql: ^16.9.0
     graphql-request: ^7.1.0
     next: ~14.0.4
+    next-plausible: ^3.12.3
     next-themes: ~0.2.1
     nprogress: ~0.2.0
     openai: ^4.71.0
@@ -12436,6 +12437,17 @@ __metadata:
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
+  languageName: node
+  linkType: hard
+
+"next-plausible@npm:^3.12.3":
+  version: 3.12.3
+  resolution: "next-plausible@npm:3.12.3"
+  peerDependencies:
+    next: "^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0 "
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: c206c552ee8ddbf1fdaec2a792ee05ae6c5a2c99c393ec7dbd035632c6f1b387b15f8c8adbdbde12c702fb411ff2217f00aebd261d69311c8b0680b2aad53a9e
   languageName: node
   linkType: hard
 

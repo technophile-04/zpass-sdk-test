@@ -3,6 +3,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
+import PlausibleProvider from "next-plausible";
 
 export const metadata = getMetadata({
   title: "Scaffold-ETH 2 App",
@@ -18,6 +19,9 @@ const lindenHill = Linden_Hill({
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning className={lindenHill.variable}>
+      <head>
+        <PlausibleProvider domain="frogjuice.fun" />
+      </head>
       <body className="bg-gray-800">
         <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
         <div id="zpass-app-connector">{/* This element will be used by the app connector */}</div>
