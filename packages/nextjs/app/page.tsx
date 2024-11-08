@@ -280,7 +280,7 @@ const Home = () => {
               <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
                 <div className="card-body p-6">
                   <h2 className="card-title text-lg font-bold text-gray-800">The Tale of {squeezedFrogName}</h2>
-                  <p className="m-0 italic font-semibold leading-relaxed">{story}</p>
+                  <p className="m-0 italic leading-relaxed">{story}</p>
                 </div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
