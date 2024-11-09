@@ -68,7 +68,7 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
                   <td>
                     <Address address={user.id} size="sm" />
                   </td>
-                  <td className="text-right">{user[`${token.attribute.toLowerCase()}Amount`]}</td>
+                  <td className="text-right">{user[`${token.attribute.toLowerCase()}Amount` as keyof UserData]}</td>
                 </tr>
               ))}
             </tbody>
