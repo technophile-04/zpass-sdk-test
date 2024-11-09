@@ -42,7 +42,7 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
 
   return (
     <div className="py-10 px-6">
-      <h2 className="text-center text-3xl sm:text-4xl font-lindenHill tracking-wide">{token.name}</h2>
+      <h2 className="text-3xl sm:text-4xl font-lindenHill tracking-wide">{token.name}</h2>
       {!leaderboard && (
         <div className="flex items-center flex-col flex-grow pt-12">
           <div className="loading loading-dots loading-md"></div>
@@ -54,7 +54,7 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
         </div>
       )}
       {leaderboard && leaderboard.users.items.length && (
-        <div className="mt-4 overflow-x-auto bg-white border border-gray-300">
+        <div className="mt-3 overflow-x-auto bg-white border border-gray-300">
           <table className="table">
             <thead>
               <tr>
