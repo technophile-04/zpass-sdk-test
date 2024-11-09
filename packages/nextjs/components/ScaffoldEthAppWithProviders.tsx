@@ -1,5 +1,6 @@
 "use client";
 
+import { Nav } from "./Nav";
 import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
@@ -15,9 +16,8 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="max-w-xl mx-auto">
-        {/* <Header /> */}
         {children}
-        {/* <Footer /> */}
+        <Nav />
       </div>
       <Toaster />
     </>
