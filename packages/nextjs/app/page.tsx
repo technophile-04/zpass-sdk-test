@@ -267,7 +267,7 @@ const Home = () => {
         >
           <div
             className={clsx("flex flex-col", {
-              "gap-4 mt-[29rem]": !z,
+              "gap-4 mt-[23rem]": !z,
             })}
           >
             {!z && (
@@ -287,8 +287,8 @@ const Home = () => {
               <button
                 onClick={handleSqueeze}
                 className={clsx("btn btn-neutral", {
-                  "mt-[25rem]": !isLoading,
-                  "mt-[9rem]": isLoading,
+                  "mt-[23rem]": !isLoading,
+                  "mt-[7rem]": isLoading,
                 })}
                 disabled={isLoading}
               >

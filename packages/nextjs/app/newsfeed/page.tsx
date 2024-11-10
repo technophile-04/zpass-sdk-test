@@ -89,8 +89,8 @@ const Newsfeed: NextPage = () => {
                   </div>
                   <p className="mt-1 line-clamp-3 text-sm/6 text-gray-600">{log.story}</p>
                 </div>
-                <div className="flex flex-wrap gap-3 text-gray-600 text-sm/6">
-                  Rewards:
+                <p className="m-0 text-sm/6">Rewards:</p>
+                <div className="mt-1 flex flex-wrap gap-3 text-gray-600 text-sm/6">
                   {scaffoldConfig.tokens.map(token => (
                     <span key={token.attribute} className="flex items-center gap-1 text-xs">
                       <JuiceImage className="w-5 h-5" name={token.name} symbol={token.symbol} />
