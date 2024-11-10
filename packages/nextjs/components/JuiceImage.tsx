@@ -1,13 +1,20 @@
 import Image from "next/image";
+import clsx from "clsx";
 
 type JuiceImageProps = {
   className?: string;
   name: string;
   symbol: string;
-  width?: number;
-  height?: number;
 };
 
-export function JuiceImage({ className = "rounded-full", name, symbol, width = 32, height = 32 }: JuiceImageProps) {
-  return <Image src={`/assets/juice-${symbol}.jpg`} alt={name} width={width} height={height} className={className} />;
+export function JuiceImage({ className = "w-8 h-8", name, symbol }: JuiceImageProps) {
+  return (
+    <Image
+      src={`/assets/juice-${symbol}.jpg`}
+      alt={name}
+      width={100}
+      height={100}
+      className={clsx("rounded-full", className)}
+    />
+  );
 }

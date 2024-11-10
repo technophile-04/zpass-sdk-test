@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { gql, request } from "graphql-request";
+import { JuiceImage } from "~~/components/JuiceImage";
 import { Address } from "~~/components/scaffold-eth";
 import { TTokenInfo } from "~~/types/frog";
 
@@ -42,7 +43,10 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
 
   return (
     <div className="py-10 px-6">
-      <h2 className="text-3xl sm:text-4xl font-lindenHill tracking-wide">{token.name}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="m-0 text-3xl sm:text-4xl font-lindenHill tracking-wide">{token.name}</h2>
+        <JuiceImage className="w-12 h-12" name={token.name} symbol={token.symbol} />
+      </div>
       {!leaderboard && (
         <div className="flex items-center flex-col flex-grow pt-12">
           <div className="loading loading-dots loading-md"></div>
@@ -54,9 +58,9 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
         </div>
       )}
       {leaderboard && leaderboard.users.items.length && (
-        <div className="mt-3 overflow-x-auto bg-white border border-gray-300">
+        <div className="mt-3 overflow-x-auto bg-base-200 border border-gray-300">
           <table className="table">
-            <thead>
+            <thead className="font-lindenHill tracking-wide text-lg text-gray-500">
               <tr>
                 <th>Address</th>
                 <th className="text-right">Rewards</th>
@@ -68,7 +72,9 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
                   <td>
                     <Address address={user.id} size="sm" />
                   </td>
-                  <td className="text-right">{user[`${token.attribute.toLowerCase()}Amount` as keyof UserData]}</td>
+                  <td className="text-right font-lindenHill tracking-wide text-lg">
+                    {user[`${token.attribute.toLowerCase()}Amount` as keyof UserData]}
+                  </td>
                 </tr>
               ))}
             </tbody>
