@@ -92,7 +92,7 @@ const Newsfeed: NextPage = () => {
                 <div className="flex flex-wrap gap-3 text-gray-600 text-sm/6">
                   Rewards:
                   {scaffoldConfig.tokens.map(token => (
-                    <span key={token.attribute} className="flex items-center gap-1">
+                    <span key={token.attribute} className="flex items-center gap-1 text-xs">
                       <JuiceImage className="w-5 h-5" name={token.name} symbol={token.symbol} />
                       {log[`${token.attribute.toLowerCase()}Amount` as keyof SqueezeLog]}
                     </span>

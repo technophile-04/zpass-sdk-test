@@ -9,12 +9,14 @@ type JuiceImageProps = {
 
 export function JuiceImage({ className = "w-8 h-8", name, symbol }: JuiceImageProps) {
   return (
-    <Image
-      src={`/assets/juice-${symbol}.jpg`}
-      alt={name}
-      width={100}
-      height={100}
-      className={clsx("rounded-full", className)}
-    />
+    <div className="bg-stone-800 border-2 border-stone-500 rounded-md">
+      <Image
+        src={`/assets/juice-${symbol}.jpg`}
+        alt={name}
+        width={100}
+        height={100}
+        className={clsx("rounded-full -rotate-45", className)}
+      />
+    </div>
   );
 }
