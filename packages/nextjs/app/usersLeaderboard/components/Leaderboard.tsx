@@ -42,7 +42,7 @@ export const Leaderboard = ({ token }: { token: TTokenInfo }) => {
   });
 
   return (
-    <div className="py-10 px-6">
+    <div className="pt-4 pb-10 px-6">
       <div className="flex items-center justify-between">
         <h2 className="m-0 text-3xl sm:text-4xl font-lindenHill tracking-wide">{token.name}</h2>
         <JuiceImage className="w-12 h-12" name={token.name} symbol={token.symbol} />
