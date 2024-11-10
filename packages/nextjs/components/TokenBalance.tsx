@@ -1,4 +1,4 @@
-import { JuiceImage } from "./JuiceImage";
+import { JuiceSlot } from "./JuiceSlot";
 import { useAccount } from "wagmi";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 import { TTokenInfo } from "~~/types/frog";
@@ -14,15 +14,5 @@ export const TokenBalance = ({ token }: { token: TTokenInfo }) => {
     watch: true,
   });
 
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative">
-        <JuiceImage className="w-20 h-20" name={token.name} symbol={token.symbol} />
-        <span className="absolute top-1 right-1 text-xs text-white font-semibold [text-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
-          {balance ? balance.toString() : 0}
-        </span>
-      </div>
-      <p className="m-0 font-lindenHill tracking-wide text-lg text-gray-50">{token.name}</p>
-    </div>
-  );
+  return <JuiceSlot balance={balance ? balance.toString() : "0"} token={token} />;
 };
