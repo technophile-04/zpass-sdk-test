@@ -83,7 +83,7 @@ const Newsfeed: NextPage = () => {
                   </time>
                 </div>
                 <div className="group relative">
-                  <div className="mt-1 flex flex-col flex-wrap justify-between sm:flex-row sm:items-center">
+                  <div className="flex flex-col flex-wrap justify-between sm:flex-row sm:items-center">
                     <h3 className="mt-3 mb-2 text-xl font-lindenHill tracking-wide text-gray-900">{log.name}</h3>
                     <Address address={log.ownerId} size="sm" />
                   </div>

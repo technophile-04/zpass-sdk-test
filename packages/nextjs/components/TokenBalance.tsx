@@ -15,14 +15,14 @@ export const TokenBalance = ({ token }: { token: TTokenInfo }) => {
   });
 
   return (
-    <tr>
-      <td>
-        <div className="flex items-center gap-4">
-          <JuiceImage name={token.name} symbol={token.symbol} />
-          {token.name}
-        </div>
-      </td>
-      <td className="text-right">{balance ? balance.toString() : 0}</td>
-    </tr>
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative">
+        <JuiceImage className="w-20 h-20" name={token.name} symbol={token.symbol} />
+        <span className="absolute bottom-2 left-2 text-xs text-white font-semibold shadow-md">
+          {balance ? balance.toString() : 0}
+        </span>
+      </div>
+      <p className="m-0 font-lindenHill tracking-wide text-lg text-gray-50">{token.name}</p>
+    </div>
   );
 };
