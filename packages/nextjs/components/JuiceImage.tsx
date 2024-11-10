@@ -13,8 +13,8 @@ export function JuiceImage({ className = "w-8 h-8", name, symbol }: JuiceImagePr
       <Image
         src={`/assets/juice-${symbol}.jpg`}
         alt={name}
-        width={100}
-        height={100}
+        width={200}
+        height={200}
         className={clsx("rounded-md", className)}
       />
     </div>
