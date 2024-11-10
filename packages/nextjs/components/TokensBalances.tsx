@@ -7,7 +7,7 @@ export const TokensBalances = () => {
       <table className="table">
         <thead className="font-lindenHill tracking-wide text-lg text-gray-500">
           <tr>
-            <th>Token</th>
+            <th>Frog Juice</th>
             <th className="text-right">Balance</th>
           </tr>
         </thead>

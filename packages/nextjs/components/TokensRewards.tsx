@@ -8,7 +8,7 @@ export const TokensRewards = ({ rewards }: { rewards: SqueezeReward }) => {
       <table className="table">
         <thead className="font-lindenHill tracking-wide text-lg text-gray-500">
           <tr>
-            <th>Token</th>
+            <th>Frog Juice</th>
             <th className="text-right">Reward</th>
           </tr>
         </thead>
