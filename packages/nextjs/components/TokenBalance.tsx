@@ -1,4 +1,4 @@
-import React from "react";
+import { JuiceSlot } from "./JuiceSlot";
 import { useAccount } from "wagmi";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 import { TTokenInfo } from "~~/types/frog";
@@ -14,11 +14,5 @@ export const TokenBalance = ({ token }: { token: TTokenInfo }) => {
     watch: true,
   });
 
-
-  return (
-    <tr>
-      <td>{token.symbol} {token.name}</td>
-      <td className="text-right">{balance ? balance.toString() : 0}</td>
-    </tr>
-  );
+  return <JuiceSlot balance={balance ? balance.toString() : "0"} token={token} />;
 };

@@ -33,7 +33,11 @@ p {
 
 .btn[disabled], .btn:disabled {
   --tw-text-opacity: 1;
-  @apply text-gray-200 border-gray-300;
+  @apply text-gray-200;
+}
+
+.table :where(thead, tbody) :where(tr:not(:last-child)), .table :where(thead, tbody) :where(tr:first-child:last-child) {
+  @apply border-b-gray-200;
 }
 
 .table :where(th, td) {

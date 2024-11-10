@@ -248,6 +248,8 @@ const Home = () => {
     backgroundImageUrl = "/priest-squeeze.jpg";
   }
 
+  const hasSqueezed = story && squeezedFrogName && squeezeReward;
+
   return (
     <main
       className="min-h-screen bg-cover bg-center bg-no-repeat"
@@ -255,8 +257,8 @@ const Home = () => {
         backgroundImage: `url('/priest.jpg')`,
       }}
     >
-      {!isConnected && <ConnectButtonLayout />}
-      {isConnected && (
+      {!isConnected && !hasSqueezed && <ConnectButtonLayout />}
+      {isConnected && !hasSqueezed && (
         <div
           className="relative flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
           style={{
@@ -285,7 +287,7 @@ const Home = () => {
               <button
                 onClick={handleSqueeze}
                 className={clsx("btn btn-neutral", {
-                  "mt-[25rem]": !isLoading && !story && !squeezedFrogName,
+                  "mt-[25rem]": !isLoading,
                   "mt-[9rem]": isLoading,
                 })}
                 disabled={isLoading}
@@ -295,29 +297,34 @@ const Home = () => {
                     <span className="loading loading-spinner"></span> Squeezing...
                   </>
                 )}
-                {!isLoading && !story && !squeezedFrogName && "Squeeze Frog"}
-                {!isLoading && story && squeezedFrogName && "Squeeze Another Frog"}
+                {!isLoading && "Squeeze Frog"}
               </button>
             )}
           </div>
-          <div>
-            {story && squeezedFrogName && squeezeReward && (
-              <>
-                <div className="absolute top-0 left-0 right-0 card w-full bg-base-200/50 rounded-none">
-                  <div className="card-body p-6">
-                    <h2 className="card-title m-0 text-xl font-lindenHill tracking-wide text-gray-800">
-                      The Tale of {squeezedFrogName}
-                    </h2>
-                    <p className="m-0 text-sm italic leading-relaxed">&quot;{story}&quot;</p>
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
-                  <div className="p-2">
-                    <TokensRewards rewards={squeezeReward} />
-                  </div>
-                </div>
-              </>
-            )}
+        </div>
+      )}
+      {isConnected && hasSqueezed && (
+        <div>
+          <div className="flex flex-col justify-between items-center min-h-screen">
+            <div className="card w-full bg-base-200/50 rounded-none">
+              <div className="card-body py-4 px-5">
+                <h2 className="card-title m-0 text-xl font-lindenHill tracking-wide text-gray-800">
+                  The Tale of {squeezedFrogName}
+                </h2>
+                <p className="m-0 text-sm italic leading-relaxed">&quot;{story}&quot;</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 pb-6">
+              <button onClick={handleSqueeze} className="btn btn-neutral" disabled={isLoading}>
+                {isLoading && (
+                  <>
+                    <span className="loading loading-spinner"></span> Squeezing...
+                  </>
+                )}
+                {!isLoading && "Squeeze Another Frog"}
+              </button>
+              <TokensRewards rewards={squeezeReward} />
+            </div>
           </div>
         </div>
       )}
