@@ -16,16 +16,9 @@ const Rewards = () => {
     >
       {!isConnected && <ConnectButtonLayout />}
       {isConnected && (
-        <div
-          className="relative flex justify-center items-center min-h-screen bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/priest.jpg')`,
-          }}
-        >
-          <div className="absolute bottom-0 left-0 right-0 card w-full bg-base-200 rounded-none">
-            <div className="p-2">
-              <TokensBalances />
-            </div>
+        <div className="min-h-screen flex justify-center items-center">
+          <div className="mt-[20rem]">
+            <TokensBalances />
           </div>
         </div>
       )}
