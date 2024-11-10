@@ -1,8 +1,8 @@
 "use client";
 
-import scaffoldConfig from "~~/scaffold.config";
-import type { NextPage } from "next";
 import { Leaderboard } from "./components/Leaderboard";
+import type { NextPage } from "next";
+import scaffoldConfig from "~~/scaffold.config";
 
 const tokens = scaffoldConfig.tokens;
 
