@@ -18,7 +18,7 @@ export const TokenBalance = ({ token }: { token: TTokenInfo }) => {
     <div className="flex flex-col items-center gap-2">
       <div className="relative">
         <JuiceImage className="w-20 h-20" name={token.name} symbol={token.symbol} />
-        <span className="absolute bottom-2 left-2 text-xs text-white font-semibold shadow-md">
+        <span className="absolute top-1 right-1 text-xs text-white font-semibold [text-shadow:_1px_1px_0_rgb(0_0_0_/_40%)]">
           {balance ? balance.toString() : 0}
         </span>
       </div>
