@@ -72,9 +72,8 @@ const entriesToProve: ForgCryptToType = {
 const myZapp: Zapp = {
   name: "Frog Bank",
   permissions: {
-    READ_POD: { collections: ["FrogCrypto (alpha)"] },
-    INSERT_POD: { collections: ["FrogCrypto (alpha)"] },
-    REQUEST_PROOF: { collections: ["FrogCrypto (alpha)"] },
+    READ_POD: { collections: ["FrogCrypto"] },
+    REQUEST_PROOF: { collections: ["FrogCrypto"] },
   },
 };
 
@@ -101,7 +100,7 @@ const Home = () => {
       }
 
       console.log("The element was found", element);
-      const clientUrl = "https://staging.zupass.org";
+      const clientUrl = "https://zupass.org";
 
       setIsLoading(true);
       const zCon = await connect(myZapp, element, clientUrl);
@@ -128,6 +127,9 @@ const Home = () => {
             FROGCRYPTO: {
               pod: {
                 entries: entriesToProve,
+                meta: {
+                  labelEntry: "name",
+                },
               },
               revealed: {
                 beauty: true,
