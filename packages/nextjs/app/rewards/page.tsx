@@ -16,8 +16,8 @@ const Rewards = () => {
     >
       {!isConnected && <ConnectButtonLayout />}
       {isConnected && (
-        <div className="min-h-screen flex justify-center items-center">
-          <div className="mt-[20rem]">
+        <div className="min-h-screen flex justify-center items-end">
+          <div className="pb-6">
             <TokensBalances />
           </div>
         </div>
