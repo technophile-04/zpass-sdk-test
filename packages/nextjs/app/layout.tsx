@@ -1,12 +1,12 @@
 import { Linden_Hill } from "next/font/google";
 import "@rainbow-me/rainbowkit/styles.css";
+import PlausibleProvider from "next-plausible";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
-import PlausibleProvider from "next-plausible";
 
 export const metadata = getMetadata({
-  title: "Scaffold-ETH 2 App",
+  title: "FrogJuice.Fun",
   description: "Built with 🏗 Scaffold-ETH 2",
 });
 
