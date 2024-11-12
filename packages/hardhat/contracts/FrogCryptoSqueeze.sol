@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Poseidon.sol";
 import "./Groth16Verifier.sol";
 
@@ -8,13 +9,15 @@ abstract contract PotionTokenContract {
     function mint(address to, uint256 amount) public virtual;
 }
 
-contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
+contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
     // The known hash of the FrogCrypto signer
     uint256 constant FROGCRYPTO_SIGNER_HASH =
         14684911797742740124972512003331124235349568037059744667498504691061732129260;
 
     // Mapping from frogId to squeeze timestamp
     mapping(uint256 => uint256) public squeezeTimestamps;
+
+    bool public enabled = false;
 
     PotionTokenContract public rarityTokenContract;
     PotionTokenContract public temperamentTokenContract;
@@ -52,6 +55,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         uint256 beautyReward,
         string nameAndStory
     );
+    event Enabled(address indexed caller);
+    event Disabled(address indexed caller);
 
     modifier verifiedProof(ProofArgs calldata proof) {
         require(this.verifyProof(proof._pA, proof._pB, proof._pC, proof._pubSignals), "Invalid proof");
@@ -78,6 +83,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         address owner,
         string memory nameAndStory
     ) public {
+        require(enabled, "Squeezing is not enabled");
+
         // First verify the proof and attributes
         require(verifyFrogAttributes(proof, attributes), "Invalid frog attributes");
 
@@ -178,5 +185,17 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         require(this.hash(input) == pubSignals[10], "Invalid speed value");
 
         return true;
+    }
+
+    function enable() external onlyOwner {
+        enabled = true;
+
+        emit Enabled(msg.sender);
+    }
+
+    function disable() external onlyOwner {
+        enabled = false;
+
+        emit Disabled(msg.sender);
     }
 }
