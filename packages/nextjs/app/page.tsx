@@ -314,14 +314,19 @@ const Home = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4 pb-6">
-              <button onClick={handleSqueeze} className="btn btn-neutral" disabled={isLoading}>
-                {isLoading && (
-                  <>
-                    <span className="loading loading-spinner"></span> Squeezing...
-                  </>
-                )}
-                {!isLoading && "Squeeze Another Frog"}
-              </button>
+              <div>
+                <button onClick={handleSqueeze} className="btn btn-neutral w-full" disabled={isLoading}>
+                  {isLoading && (
+                    <>
+                      <span className="loading loading-spinner"></span> Squeezing...
+                    </>
+                  )}
+                  {!isLoading && "Squeeze Another Frog"}
+                </button>
+                <p className="mb-0 mt-1 text-white text-xs text-center bg-black/60 p-1 rounded-md">
+                  You may only squeeze a frog once per day
+                </p>
+              </div>
               <TokensRewards rewards={squeezeReward} />
             </div>
           </div>
