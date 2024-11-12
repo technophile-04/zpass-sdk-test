@@ -11,7 +11,7 @@ abstract contract PotionTokenContract {
 contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
     // The known hash of the FrogCrypto signer
     uint256 constant FROGCRYPTO_SIGNER_HASH =
-        320469162396708332516033932244029190181315114284264408621970394677041964715;
+        14684911797742740124972512003331124235349568037059744667498504691061732129260;
 
     // Mapping from frogId to squeeze timestamp
     mapping(uint256 => uint256) public squeezeTimestamps;
@@ -138,7 +138,7 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon {
         uint256[60] memory pubSignals = proof._pubSignals;
 
         // Verify FrogCrypto signer
-        require(pubSignals[25] == FROGCRYPTO_SIGNER_HASH, "Invalid signer");
+        require(pubSignals[12] == FROGCRYPTO_SIGNER_HASH, "Invalid signer");
 
         uint256[1] memory input;
 

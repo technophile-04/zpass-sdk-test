@@ -151,14 +151,11 @@ const Home = () => {
 
       if (result.success) {
         const boundConfig = result.boundConfig;
-        console.log("The bound config is:", boundConfig);
         const revealedClaims = result.revealedClaims;
         const circuit = gpcPreVerify(boundConfig, revealedClaims);
         const pubSignals = ProtoPODGPC.makePublicSignals(circuit.circuitPublicInputs, circuit.circuitOutputs);
 
-        console.log("The pubSignals are:", pubSignals);
         const frogStats = revealedClaims.pods.FROGCRYPTO?.entries;
-        console.log("The frogStats are:", frogStats);
         const frogName = frogStats?.name.value;
 
         const beauty = frogStats?.beauty.value as any as bigint;

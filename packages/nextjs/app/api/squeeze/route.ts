@@ -5,8 +5,8 @@ import { createPublicClient, createWalletClient, fallback, http, parseEventLogs,
 import { privateKeyToAccount } from "viem/accounts";
 import deployedContracts from "~~/contracts/deployedContracts";
 import scaffoldConfig from "~~/scaffold.config";
-import { getAlchemyHttpUrl, getParsedError } from "~~/utils/scaffold-eth";
 import { SqueezeReward } from "~~/types/frog";
+import { getAlchemyHttpUrl, getParsedError } from "~~/utils/scaffold-eth";
 
 const wallet_private_key = (process.env.WALLET_PRIVATE_KEY ||
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80") as `0x${string}`;
@@ -137,7 +137,7 @@ export async function POST(req: Request) {
     console.log("The acutal values are:", actualStats);
     const convertedFrogStats = convertFrogStatsToBigInt(actualStats);
 
-    const message = `You are signing that you own ${body.frogStats.name} at timestamp ${body.timestamp} on https://frogcrypto-squeeze.com`
+    const message = `You are signing that you own ${body.frogStats.name} at timestamp ${body.timestamp} on https://frogcrypto-squeeze.com`;
 
     // Verify signature
     const isValidSignature = await verifyMessage({
@@ -185,9 +185,7 @@ export async function POST(req: Request) {
       ],
     });
 
-    const transaction = await publicClient.waitForTransactionReceipt(
-      { hash }
-    );
+    const transaction = await publicClient.waitForTransactionReceipt({ hash });
     console.log("Transaction: ", transaction);
 
     const logs = parseEventLogs({
@@ -203,7 +201,7 @@ export async function POST(req: Request) {
       jump: logs[0].args.jumpReward.toString(),
       speed: logs[0].args.speedReward.toString(),
       rarity: logs[0].args.rarityReward.toString(),
-    }
+    };
 
     return NextResponse.json(
       {
@@ -217,7 +215,10 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     const parsedErrorMessage = getParsedError(error);
+    const finalErrorMessage = parsedErrorMessage.toLowerCase().includes("invalid signer")
+      ? `${parsedErrorMessage}, please use another frog`
+      : parsedErrorMessage;
     console.error(error);
-    return NextResponse.json({ error: parsedErrorMessage }, { status: 500 });
+    return NextResponse.json({ error: finalErrorMessage }, { status: 500 });
   }
 }
