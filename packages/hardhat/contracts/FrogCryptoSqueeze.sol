@@ -88,9 +88,8 @@ contract FrogCryptoSqueeze is Groth16Verifier, Poseidon, Ownable {
         // First verify the proof and attributes
         require(verifyFrogAttributes(proof, attributes), "Invalid frog attributes");
 
-        // TODO: change cooldown period
         require(
-            squeezeTimestamps[attributes.frogId] + 1 minutes < block.timestamp,
+            squeezeTimestamps[attributes.frogId] + 1 days < block.timestamp,
             "Squeeze: Cooldown period is not over yet"
         );
 
