@@ -7,7 +7,7 @@ import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 export const metadata = getMetadata({
   title: "FrogJuice.Fun",
-  description: "Built with 🏗 Scaffold-ETH 2",
+  description: "Squeeze your frogs and get rewards on-chain!",
 });
 
 const lindenHill = Linden_Hill({
