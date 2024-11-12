@@ -14,17 +14,23 @@ const networks = {
 
 const contractNames = Object.keys(deployedContracts[targetNetwork.id]);
 
-const contracts = Object.fromEntries(contractNames.map((contractName) => {
-  return [contractName, {
-    network: targetNetwork.name as string,
-    abi: deployedContracts[targetNetwork.id][contractName].abi,
-    address: deployedContracts[targetNetwork.id][contractName].address,
-    startBlock: deployedContracts[targetNetwork.id][contractName].startBlock || 19609015,
-  }];
-}));
+const contracts = Object.fromEntries(
+  contractNames.map((contractName) => {
+    return [
+      contractName,
+      {
+        network: targetNetwork.name as string,
+        abi: deployedContracts[targetNetwork.id][contractName].abi,
+        address: deployedContracts[targetNetwork.id][contractName].address,
+        startBlock:
+          deployedContracts[targetNetwork.id][contractName].startBlock ||
+          22301486,
+      },
+    ];
+  })
+);
 
 export default createConfig({
   networks: networks,
   contracts: contracts,
 });
-
