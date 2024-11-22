@@ -34,7 +34,7 @@ const openai = new OpenAI({
 
 async function generateFrogStory(frogStats: FrogStats): Promise<string> {
   const prompt = `
-Create a short, mystical story (max 4 sentences) about a priest juicing this frog in a magical ritual. Use these attributes in creative ways:
+Create a short, mystical story (max 2 sentences and leave it open and vague) about a high priestess juicing this frog in a magical ritual. Great juices are extracted!!! Use these attributes in creative ways:
 
 Name: ${frogStats.name}
 Beauty: ${frogStats.beauty}/15
